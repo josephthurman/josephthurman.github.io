@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="A lot of work in mathematical finance is related to the pricing of financial derivatives, that is, financial assets that have values that depend on (that is, values that are derived from) the value of another asset. Some of the simplest derivatives are European call and put options. In this …" />
+<meta name="keywords" content="">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="Introduction to Pricing Options with Binomial Trees"/>
+<meta property="og:description" content="A lot of work in mathematical finance is related to the pricing of financial derivatives, that is, financial assets that have values that depend on (that is, values that are derived from) the value of another asset. Some of the simplest derivatives are European call and put options. In this …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/binomial1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-02-16 12:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="finance, binomial-model"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; Introduction to Pricing Options with Binomial Trees</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="binomial1">Introduction to Pricing Options with Binomial Trees</h1>
+    <p>
+          Posted on Fri 16 February 2018 in <a href="http://www.josephthurman.com/category/finance-binomial-model.html">finance, binomial-model</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>A lot of work in mathematical finance is related to the pricing of financial derivatives, that is, financial assets that have values that depend on (that is, values that are derived from) the value of another asset. Some of the simplest derivatives are <em>European call</em> and <em>put</em> options. In this post, we'll explain what these options are, and then describe a very simple model, the (one step) <em>Binomial Options Pricing Model</em>, that can be used to find prices for these options. In the next post, we'll see how this model can be improved and expanded.</p>
+<h3>European Call and Put Options</h3>
+<p>A European <em>call</em> option is a contract that gives one investor, who is said to have the <em>long</em> position in the contract, the option (but not the obligation) to <em>buy</em> a particular asset at specified future time, called the <em>expiration time</em> of the option, for a price specified at the time the contract is made.  This price is called the <em>strike</em> price. Their counterparty, who must agree to sell at that particular price, is said to hold the <em>short</em> position in the contract. For a European <em>put</em> option, the investor holding the long position has the option to <em>sell</em> a particular asset at a specified time and price, while the person taking the short position agrees to buy at that price.  </p>
+<p>It is important to note that long positions in options are always truly optional. That is, if a person holds a long position in a call option with a strike price of &dollar;100, but the underlying asset's price is only &dollar;95 when the option expires, they can simply chose not to <em>exercise</em> their option, and buy the asset at the lower market price if they wish.  The short position in an option, though, carries an obligation. The holder of a short position in a call option, for example, is forced to sell an asset at a lower price than the market price if the call option is exercised.</p>
+<p>What are options good for? An investor might wish to purchase a call option on a stock if they believe the stock price is likely to go up.  For example, say that a particular stock has a price of &dollar;100 today.  If an investor believes that the stock price is likely to increase over six months, say to &dollar;120, they might purchase a call option to buy the stock for a strike price of &dollar;100 in six months.  If their prediction is correct, then in 6 months time they can exercise the call option to buy the stock for only &dollar;100, then immediately resell in the normal market for &dollar;20, netting a &dollar;20 profit.  </p>
+<p>Of course, if the investor thinks that the stock will be worth &dollar;120, they could just buy the stock now for &dollar;100 and make a &dollar;20 profit in six months when they sell - what do they need the option for?  The option is an attractive investment because it is much cheaper to own than the stock itself. As we'll see below, the option on the stock above might cost in the neighborhood of &dollar;10, so the investor could double their money with the option. This strategy is riskier, though - if the investor spends &dollar;100 on the stock and it goes down to &dollar;90, they've only lost &dollar;10, while if the investor spends &dollar;100 on 20 options and the price goes down, they lose their entire investment.</p>
+<p>The above is a description of the use of options for speculating in the market, but they can also be used like a type of insurance to hedge risk.  If an investor already owned that same &dollar;100 stock and was worried that the value could drop drastically, they might purchase a put option with a strike price of &dollar;90.  If the stock dives to &dollar;80, they'll still be able to sell for &dollar;90, limiting their loss to &dollar;10 instead of &dollar;20.  </p>
+<h3>The Simplest Binomial Model</h3>
+<p>Let's consider the simplest possible scenario in which to price a European call option. Say that a stock has a price today of &dollar;100 (all prices will be in dollars, so we'll sometimes drop the dollar signs for convenience).  And let's assume that in six months' time, the stock will take one of only two possible values&mdash;either increasing 20% to 120, or decreasing 20% to 80.  Consider a European call option for the stock with a strike price of 100 that expires in six months.  What is a fair price to pay for this option?</p>
+<p>To decide on a price, we see that if we hold the option and the stock goes up, then we'll be able to exercise the option to make a profit of 20. If the stock price goes down, then at expiry there will be no reason to use the option and it will expire worthless for a profit of 0.  To find a price for this option, we will <em>replicate</em> these possible cash flows using a combination of stocks and cash. (We use cash in this discussion to avoid discussing interest rates, which will be discussed in the next post.) Here, we're using one of the bedrock assumptions of mathematical finance, the "no-arbitrage" condition.  This condition says that if two different portfolios involves identical cashflows, then the portfolios must have exactly the same value. The price we'll find for the option is therefore called the <em>arbitrage-free</em> price.</p>
+<p>Consider a portfolio that consists of <span class="math">\(a\)</span> shares of the stock and <span class="math">\(b\)</span> dollars in cash. That is, if <span class="math">\(S\)</span> is the price of the stock, the value of the portfolio is <span class="math">\(P = aS + b\)</span>.  We'd like this portfolio to have the same cash flows as the option, that is, in six months if <span class="math">\(S = 80\)</span>, we wish for <span class="math">\(P = 0\)</span>, while if <span class="math">\(S = 120\)</span>, then <span class="math">\(P = 20\)</span>. You might recognize from these formulas that we're trying to choose the linear function <span class="math">\(P(S)\)</span> so that it has two particular values, <span class="math">\(P(80) = 0\)</span> and <span class="math">\(P(120) = 20\)</span>, and since two points always determine a unique line, we can solve to find that we should have <span class="math">\(a = 1/2\)</span> and <span class="math">\(b = -40\)</span>. Thus, if we have a portfolio that consists <span class="math">\(1/2\)</span> a stock and <span class="math">\(-b\)</span> dollars, this portfolio will have exactly the same payout as the option in 6 months, and therefore the value of the portfolio today must be the value of the option today.  Since the portfolio is worth <span class="math">\((1/2) \times 100 - 40 = 10\)</span> today, the price of the option must be &dollar;10.</p>
+<p>There are still two issues to consider. First, this method of pricing requires us to own half a share in a stock, which is generally not possible.  In practice, this isn't actually an issue. We've assumed that the option contract we're pricing gives the option to buy or sell only one share of stock, but options generally involve 100 shares of stock.  Thus instead of buying 1/2 a stock, our argument above essentially says that we'd need to buy half of the number of shares specified in the option contract, that is, 50 shares.  The other issue is interpreting the negative value of <span class="math">\(b\)</span>.  Here <span class="math">\(b = -40\)</span> means that the portfolio includes an obligation to make a payment of &dollar;40 six months in the future, which we can think of as a repayment of a loan.</p>
+<p>To summarize, if an investor wants to buy the call option on this stock we've discussed, they have two options. First, they could just buy the option itself, for a cost of &dollar;<span class="math">\(C\)</span>, and in six months they'll either receive &dollar;20 or &dollar;0 from the option, depending on whether the stock moves up or down.  On the other hand, they could take &dollar;10 and take out an additional six-month loan of &dollar;40, and use the combined sum to buy half a stock.  In 6 months, they can sell that half-share of stock and repay the loan. The payout from this process is identical to the payout of the call option, and this process costs &dollar;10. Since the portfolio of stock and a loan replicates the payouts of the option, the prices are the same, and the option's price is <span class="math">\(C=10\)</span>.</p>
+<h3>Risk-Neutral Pricing</h3>
+<p>Although the replication argument above works well in this simple case, we'll see in the next post that it can be difficult to generalize to more complicated models and situations.  For those situations, there is an alternate method to find the price of the option, using so called <em>risk-neutral</em> pricing.</p>
+<p>One surprising fact about the replication argument is that it didn't include any probabilities. Let's momentarily ignore the argument above, and try to find the correct price of the option using probabilities. If we assume that the probability of the stock price increasing is <span class="math">\(p\)</span> (and therefore that the probability of a decrease is <span class="math">\(1-p\)</span>), then the expected value of the option 6 months from now is
+</p>
+<div class="math">\begin{equation*}
+E(C) = 20 \cdot p + 0\cdot(1-p) = 20p
+\end{equation*}</div>
+<p>
+Since the option is expected to be worth <span class="math">\(20p\)</span> at expiry, if we ignore interest rates (and risk, see below), its value today should be the same as well. We've found a price for the option, then, once we can determine a value for <span class="math">\(p\)</span>.</p>
+<p>Of course, the probability could in principle have any value between 0 and 1, and different investors might have different ideas of what the probability is.  There is one special value that <span class="math">\(p\)</span> could take, the so called <em>risk-neutral</em> probability, that it turns out is better than all the others for pricing the option.</p>
+<p>To find this probability, we can again perform an expected value calculation, but this time find the expected value of the stock in the future.  We then have
+</p>
+<div class="math">\begin{equation*}
+E(S) = 120\cdot p + 80 \cdot(1-p) = 80 + 40p
+\end{equation*}</div>
+<p>
+Then, similar to the above reasoning, if we <em>ignore the riskiness of the stock price</em>, then the price today must equal the expected future value, that is
+</p>
+<div class="math">\begin{equation*}
+100 = 80 + 40 p,
+\end{equation*}</div>
+<p>
+which we can solve to find <span class="math">\(p = 1/2\)</span>. This value of <span class="math">\(p\)</span> is called the risk-neutral probability.</p>
+<p>Why is this called the "risk-neutral" probability? It's because a normal investor should think that the value of a stock today is <em>less</em> than the expected value of the stock in the future, because the future value is uncertain. If they thought the &dollar;100 stock today would still be worth on average only &dollar;100 in the future, they'd be better off just keeping their money and not taking any risk. Only an investor who is indifferent to risk would think that a stock with an (risky) expected value of &dollar;100 in the future is also worth &dollar;100 today. By equating the expected future value of the stock and the price of the stock today, we're therefore thinking like a <em>risk-neutral</em> investor. We actually made the same assumption earlier when we said that the expected value of <span class="math">\(20p\)</span> for the option in the future should equal the price of the option today.</p>
+<p>Putting these arguments together, we have that if <span class="math">\(p = 1/2\)</span> is the risk-neutral probability, then the risk-neutral price of the option today should be <span class="math">\(20 \times (1/2) = 10\)</span>, the same as the arbitrage-free price we found in the previous section.</p>
+<h3>Why Risk-Neutral Pricing?</h3>
+<p>The question "Why risk-neutral pricing?" could mean two different things, either "Why does risk-neutral pricing give the same price as replication?" or "Why use risk-neutral pricing instead of replication?". We'll answer the second question more fully in the next post, where we'll see that the risk-neutral pricing method is simpler when we consider more complicated models.  The first question does require an answer, though, because at first glance risk-neutral pricing seems like exactly the wrong method. Investors are generally <em>not</em> risk neutral, and investing is essentially all about either buying or selling risk. For example, investors are often either trying to create risk in the hope of a return (like the options speculator from earlier) or trying to hedge risks to remove uncertainty (like the use of options as insurance). How can ignoring one of the most important aspects of an investment lead to the right price?</p>
+<p>To see how, imagine that someone has cruelly forced you to <em>short</em> the option. Recall from above that this means that, if the stock price rises above &dollar;100, you'll be forced to sell the stock for a below-market price. How might you manage this risk?</p>
+<p>One method would be to buy half a share of the stock. Let's consider the value of a portfolio that consists of half a share of stock, plus the short position in the option. If the stock price goes up to 120, then the option will be exercised and you'll unfortunately lose 20 on the option.  However, you will also own half a share of the stock, which in this world will have a value of 60, and so the total value of the portfolio is 40.  On the other hand, if the stock price goes down, the option will not be exercised, and the only value in the portfolio will be half the value of the stock, which will also be 40. (Note that this gives one more demonstration that the option is worth 10 - the future value of the portfolio is 40, not matter what, so the portfolio's value today is 40, and <span class="math">\(50 - 10 = 40\)</span>. This also does not assume risk-neutrality, since the future value of the portfolio is certain to be 40.)</p>
+<p>It turns out that the risk in the option is completely manageable - by judiciously buying the stock related to the option, you can remove the risk inherent in the value of the option itself.  That is, instead of an uncertain position that could involve either no change in value or a loss of &dollar;20, you know have a certain position that involves a final portfolio value of &dollar;40 in all possible scenarios. Because the risk can be removed, it's doesn't determine the price of the option, and therefore you can use pricing methods that ignore risk to correctly price the option.</p>
+<p>Note that this argument, and the replication argument from earlier, depend on the assumption that the market for the stock and the option are well-functioning. The replication argument assumed that money can be easily borrowed, and the hedging argument in this section requires that the stock on which the option is based can be traded. Neither assumption is always true. For example, there are options that pay depending on the weather, which could be used by a farmer, for example, to receive a payment in case bad weather causes problems with a crop.  The risk in this option is harder to hedge&mdash;you can't buy or sell a drought. Risk-neutral pricing methods therefore require some assumptions to be made before they can be applied, and whether or not those assumptions are reasonable can determine whether the prices are correct.</p>
+<h3>Next Time - Improving the Model</h3>
+<p>Although the model we've developed so far does work to give us prices for a call option (and also can be easily modified to give prices for put options well), the assumptions that we've made in our model are obviously too simplistic.  Stock prices, after all, can take many more than two possible values in the future. We've also ignored some other complicating factors, like interest rates, that can have a major effect on the price of the option. In the next post, we'll address these shortcomings to see how this binomial model gives accurate and useful prices for options contracts in real life.  </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
