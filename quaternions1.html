@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="In the introductory post to this series of posts explaining my thesis, we first heard about &#34;quaternion-Kähler manifolds,&#34; a type of geometric object with special curvature properties. These special geometric properties are related to the algebraic properties of the quaternions, a 4-dimensional number system that generalizes the somewhat more familiar …" />
+<meta name="keywords" content="thesis, quaternions">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="On the Way to the Quaternions: Real and Complex Numbers"/>
+<meta property="og:description" content="In the introductory post to this series of posts explaining my thesis, we first heard about &#34;quaternion-Kähler manifolds,&#34; a type of geometric object with special curvature properties. These special geometric properties are related to the algebraic properties of the quaternions, a 4-dimensional number system that generalizes the somewhat more familiar …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/quaternions1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-02-22 10:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Thesis"/>
+<meta property="article:tag" content="thesis"/>
+<meta property="article:tag" content="quaternions"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; On the Way to the Quaternions: Real and Complex Numbers</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="quaternions1">On the Way to the Quaternions: Real and Complex Numbers</h1>
+    <p>
+          Posted on Thu 22 February 2018 in <a href="http://www.josephthurman.com/category/thesis.html">Thesis</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>In the <a href="http://www.josephthurman.com/first-series-explaining-my-thesis.html">introductory post</a> to this series of posts explaining my thesis, we first heard about "quaternion-K&auml;hler manifolds," a type of geometric object with special curvature properties.  These special geometric properties are related to the algebraic properties of the <em>quaternions</em>, a 4-dimensional number system that generalizes the somewhat more familiar real and complex number systems. In this post, we'll lay the groundwork for defining the quaternions by discussing some properties of the real and complex numbers. A good understanding of these two number systems, and especially of the complex numbers, will be necessary to understand the more complicated quaternions.</p>
+<h3>The Real Numbers</h3>
+<p>The real number system, often denote in mathematics by the symbol <span class="math">\(\mathbb{R}\)</span>, is the number system associated to the concept of the "number line" that is often taught in schools.  That is, if one considers a straight, infinitely long line, then every point on that line can be associated to a number.  We can choose a center point for the line, which we associate to the number 0, and then could repeatedly move to the right by a fixed distance to mark the points associated to 1, 2, 3, etc., and similarly to the left for the points -1, -2, -3, etc.  All other points on this line also represent numbers - the point exactly halfway between -1 and -2 is the point -3/2, while the number <span class="math">\(\pi = 3.14159\ldots\)</span> is associated to a point that's a little to the right of 3, and so on.  All real numbers can be written as decimals (although those decimals might repeat infinitely, as in <span class="math">\(1/3 = 0.3333333\ldots\)</span>, or might even go one forever without any discernible pattern, as in <span class="math">\(\pi\)</span>), and using these decimal expressions we have methods for adding, subtracting, multiplying and dividing real numbers.</p>
+<p><img alt="The number line" src="http://www.josephthurman.com/numberline.png">  </p>
+<p><em>The real number line</em></p>
+<p>Although the idea of the real number line is fairly intuitive, the formal mathematical definition of the real numbers is rather complicated, and a great deal of mathematical energy was expended to define and understand the real numbers.  This technical work is in one sense extremely important to my own thesis work, in that it is the foundation for all of calculus and therefore for all of my work.  On the other hand, Newton and Leibniz invented calculus without a mathematically rigorous definition of the real number system, and if they didn't need all of the gory technical details, then we won't spend too much time worrying about them either.</p>
+<p>With that said, we will say a few important facts about the real numbers.  First, the real numbers are a <em>field</em>, the mathematical word for set equipped with operations that behave like addition, subtraction, multiplication, and division. The abstract definition of a field was essentially made to generalize the structure of the real numbers.  The real number field has two extra properties, though, that make it special.  </p>
+<p>First, it is <em>ordered</em>, that is, for any two numbers <span class="math">\(x, y\)</span> we can always say that either <span class="math">\(x \leq y\)</span> or <span class="math">\(y \leq x\)</span> (or both if we actually have <span class="math">\(x = y\)</span>) and that this order satisfies some extra properties to make it consistent with the addition and multiplication operations. (One of these is that if <span class="math">\(x \geq 0\)</span> and <span class="math">\(y \geq 0\)</span>, then we also have that the product <span class="math">\(xy \geq 0\)</span>.)  Not every field is ordered. For example, since the complex numbers discussed below are two dimensional, they do not admit an order that's compatible with the field structure.</p>
+<p>Second, the real numbers are <em>Dedekind-complete</em> with respect to this order. This property is also known as the "least upper bound property." It says that, given any non-empty collection of real numbers that has some upper bound (a number <span class="math">\(M\)</span> such that if <span class="math">\(x\)</span> is a number in the collection, <span class="math">\(x \leq M\)</span>), then that collection has a <em>smallest</em> upper bound.  This is also not true for every field. In particular, the <em>rational</em> numbers do not have this property.  The rational numbers are the set of numbers that can be expressed as a ratio of two integers (for example, <span class="math">\(2\)</span> and <span class="math">\(-5/4\)</span> are rational, while <span class="math">\(\pi\)</span> is not). The rational numbers are also a field, since one can add, subtract, multiply, and divide fractions (and the result is always a fraction), and are in fact an ordered field as well.  They are not, however, Dedekind-complete. To see why, consider the set of all rational numbers less than <span class="math">\(\sqrt{2}\)</span>. This set is bounded, and it's not hard to see that the least upper bound of this set is <span class="math">\(\sqrt{2}\)</span>. But <span class="math">\(\sqrt{2}\)</span> is irrational, so the set of rational numbers does not have the least upper bound property since the least upper bound <span class="math">\(\sqrt{2}\)</span> is not itself a rational number.</p>
+<p>One can show with a fair amount of work that these two properties uniquely determine the real numbers, that is, there is exactly one ordered, Dedekind-complete field. Still, making a formal mathematical construction of a field that satisfies these two properties is not easy, and the interested reader can search the internet for more information on either <a href="https://en.wikipedia.org/wiki/Dedekind_cut">Dedekind cuts</a> or <a href="https://en.wikipedia.org/wiki/Construction_of_the_real_numbers#Construction_from_Cauchy_sequences">Cauchy sequences</a>. For the future, we'll only need the intuitive understanding of the real numbers as the points along the number line, but it's good to point out the difficulties in defining the real number line as an example of the way that seemingly intuitive concepts can hide a great deal of mathematical complexity.  </p>
+<h3>The Complex Numbers</h3>
+<p>One drawback of the real numbers is that they are not <em>algebraically closed</em>. This means that not every real polynomial has real roots.  A <em>real polynomial</em> is an expression with the form
+</p>
+<div class="math">\begin{equation*}
+p(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_2 x^2 + a_1 x + a_0
+\end{equation*}</div>
+<p>
+where the coefficients <span class="math">\(a_n, \ldots, a_0\)</span> are real numbers and <span class="math">\(x\)</span> is a variable.  A <em>root</em> of a polynomial is a value for <span class="math">\(x\)</span> that makes <span class="math">\(p(x) = 0\)</span>.  For example, <span class="math">\(1\)</span> is a root of the polynomial <span class="math">\(q(x) = x^2 - 1\)</span>.</p>
+<p>But we can find polynomials with real-number coefficients that do not have any real-number roots, such as
+</p>
+<div class="math">\begin{equation*}
+p(x) = x^2 + 1
+\end{equation*}</div>
+<p>
+For any real number <span class="math">\(x\)</span>, the square <span class="math">\(x^2 \geq 0\)</span>, and so <span class="math">\(x^2 + 1 &gt; 0\)</span> and there can be no real roots.  </p>
+<p>It's somewhat inconvenient to have equations involving only real numbers that are still impossible to solve.  To fix this problem, we can define a new number <span class="math">\(i\)</span>, called the <em>imaginary unit</em>, to be a number such that <span class="math">\(i^2 = -1\)</span> so that <span class="math">\(i\)</span> is a root of <span class="math">\(p(x)\)</span> above. This leads to the definition of the <em>complex numbers</em>. A complex number <span class="math">\(z\)</span> consists of a pair of real numbers <span class="math">\(a, b\)</span>, which we call the <em>real</em> and <em>imaginary</em> parts, respectively, and we write <span class="math">\(z = a + bi\)</span>. The set of all complex numbers is denoted by <span class="math">\(\mathbb{C}\)</span>.  Note that we can consider the real numbers <span class="math">\(\mathbb{R}\)</span> as a subset of the complex numbers: if <span class="math">\(a\)</span> is a real number, we can consider it as the complex number <span class="math">\(a + 0 i\)</span>, that is, a complex number with no imaginary part. This is a two dimensional number system, since a number in <span class="math">\(\mathbb{C}\)</span> actually consists of a <em>pair</em> of real numbers.</p>
+<p>The choice of the word "imaginary" to describe these numbers is unfortunate, since it implies that these numbers aren't actually numbers and are just strange mathematical objects someone dreamed up. (This terminology was coined by Ren&eacute; Descartes, of "I think therefore I am" fame, in order to denigrate the complex numbers in exactly this way.) And some would say this criticism makes sense. After all, these numbers are defined so that the equation <span class="math">\(X^2 + 1 = 0\)</span> can have a solution, and some might say that this equation obviously has no solutions and it's silly to ask for one.  </p>
+<p>Such objections are based on opinion, though, which doesn't really count for much in formal mathematics.  Worse, the same kind of argument could be used to ignore any number of mathematical topics.  Consider negative numbers: they were introduced to be able to solve equations like, say, <span class="math">\(X + 5 = 2\)</span>. But this equation is ridiculous and obviously shouldn't have a solution - after all, if you started with <span class="math">\(X\)</span> apples and someone gave you five apples, how could you end with only 2?</p>
+<p>Arguments about whether or not certain numbers are "real" in a philosophical sense can get surprisingly heated.  Consider for example the irrational numbers, that is, real numbers that are not rational numbers. Actually, if you happen to follow a Pythagorean philosophy, it's probably safer not to. The Pythagorean theorem is named after Pythagoras, an ancient Greek philosopher who also lead something like a cult that was based around mathematical principles.  His and his followers' theology was heavily influenced by music and harmony, where many important concepts like scales and consonance are related to having only whole-number ratios of numbers.  They were so invested in the divine order of rational numbers that it's sometimes said that they denied the existence of irrational numbers, going so far as to <a href="https://io9.gizmodo.com/did-pythagoras-really-murder-a-guy-1460668208">murder one of their own members</a> for proving that <span class="math">\(\sqrt{2}\)</span> is irrational. (The story of the murder probably isn't actually true, partly because there is some disagreement about exactly which irrational number was the cause for the murder. The story linked above says it's the <a href="https://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a>, but the version with <span class="math">\(\sqrt{2}\)</span> is also common.) Somewhat ironically, the Pythagoreans would have thought about <span class="math">\(\sqrt{2}\)</span> because, if a perfect square has a side length of 1, then the length of the diagonal will be <span class="math">\(\sqrt{2}\)</span>, a fact that one can prove using the Pythagorean theorem.  </p>
+<p>Thus if you think it makes sense to talk about negative numbers, or irrational numbers, then you should think it makes perfectly good sense to talk about imaginary numbers and complex numbers as well.  If nothing else, we'll see in a later post that complex numbers can and do have a real physical significance, even if it's less obvious than applications of other number systems.</p>
+<h3>Operations with Complex Numbers</h3>
+<p>With any concerns about the ontological status of the complex numbers brushed aside, we can now define operations with complex numbers. We will define addition, subtraction, multiplication, and division rules for complex numbers so that <span class="math">\(\mathbb{C}\)</span> is also a field.  Addition and subtraction are defined in a fairly straightforward way, essentially by considering <span class="math">\(i\)</span> as a variable and combining like terms.  That is, if <span class="math">\(z = a + bi\)</span> and <span class="math">\(w = c + di\)</span> are complex numbers, then
+</p>
+<div class="math">\begin{equation*}
+z \pm w = (a + bi) \pm (c + di) = (a \pm c) + (b \pm d)i
+\end{equation*}</div>
+<p>
+We just add (or subtract) the real parts and the imaginary parts separately.  Multiplication is defined by again treating <span class="math">\(i\)</span> as a variable, but also making the simplification that <span class="math">\(i^2 = -1\)</span> wherever possible. Therefore we have
+</p>
+<div class="math">\begin{align*}
+z \times w &amp;= (a+bi) \times (c+di) \\
+  &amp;= ac + adi + bci + bdi^2 \\
+  &amp;= ac + adi + bci - bd \\
+  &amp;= (ac - bd) + (ad + bc)i
+\end{align*}</div>
+<p>
+We'll generally drop the multiplication sign, and denote multiplication just by juxtaposition, i.e., <span class="math">\(zw\)</span> means the same as <span class="math">\(z \times w\)</span>.</p>
+<p>To define division of complex numbers, we can consider one extra operation on complex numbers, called <em>complex conjugation</em>.  Given a complex number <span class="math">\(z = a + bi\)</span>, then its complex conjugate, denoted by <span class="math">\(\overline{z}\)</span>, is the complex number <span class="math">\(\overline{z} = a - bi\)</span>, that is, we switch the sign on the imaginary part of <span class="math">\(z\)</span>.  Complex conjugation is special because the product of a complex number and its complex conjugate is always a real number:
+</p>
+<div class="math">\begin{align*}
+z \overline{z} &amp;= (a+bi)(a-bi) \\
+  &amp;= a^2 - abi + abi - b^2 i^2 \\
+  &amp;= a^2 + b^2
+\end{align*}</div>
+<p>
+The number <span class="math">\(\sqrt{z \overline{z}} = \sqrt{a^2 + b^2}\)</span> is also called the <em>norm</em> or <em>modulus</em> of <span class="math">\(z\)</span>, and will be discussed more in a later post.</p>
+<p>Once we have defined complex conjugation, we can write the rule for division of complex numbers. It's actually easier to define a different operation, called the <em>inverse</em> of a complex number.  Given a nonzero complex number <span class="math">\(z\)</span>, we will define the inverse to be the complex number denoted by <span class="math">\(z^{-1}\)</span> with the property that <span class="math">\(zz^{-1} = 1\)</span>. (Zero has no inverse, since <span class="math">\(0\)</span> times any complex number can never be 1. This is ok because division by 0 is not defined anyway). Defining an inverse is the same as defining division, since division is just the operation that  undoes multiplication.  That is, if we have the product <span class="math">\(wz\)</span> and want to undo the multiplication by <span class="math">\(z\)</span>, one way to do so would be to "divide by <span class="math">\(z\)</span>" to be left with just <span class="math">\(w\)</span>.  Since we could also take <span class="math">\((wz)z^{-1} = w (z z^{-1}) = w (1) = w\)</span>, we define "division by <span class="math">\(z\)</span>" to be the same as "multiplication by the inverse <span class="math">\(z^{-1}\)</span>".</p>
+<p>So what is the inverse?  Using the conjugation operator, we can define
+</p>
+<div class="math">\begin{equation*}
+z^{-1} = \frac{1}{|z|^2} \overline{z} = \frac{a}{a^2+b^2} - \frac{b}{a^2 + b^2}i
+\end{equation*}</div>
+<p>
+To check that this is correct, observe that
+</p>
+<div class="math">\begin{align*}
+zz^{-1} &amp;= (a+bi)\left( \frac{a}{a^2+b^2} - \frac{b}{a^2 + b^2} i \right) \\
+  &amp;= \frac{a^2}{a^2 + b^2} - \frac{ab}{a^2 + b^2} i + \frac{ab}{a^2 + b^2} i - \frac{b^2}{a^2+b^2}i^2 \\
+  &amp;= \frac{a^2}{a^2 + b^2} + \frac{b^2}{a^2+b^2} = \frac{a^2+b^2}{a^2 + b^2} = 1
+\end{align*}</div>
+<p>So we have that the complex numbers are a field, but what are they good for? Returning to the motivation for the construction of the complex numbers in the previous section, one can show that the complex numbers are algebraically closed. That is, any (nonconstant) polynomial with <em>complex</em> coefficients will always have a complex root.  Since real numbers are themselves a subset of the complex numbers, this means that any polynomial equation with real coefficients can always be solved using complex numbers.  The fact that the complex numbers are algebraically closed is known as the "Fundamental Theorem of Algebra."</p>
+<p>This leads to one of the main situations in which a non-mathematician might have encountered complex numbers in school.  Many people learn the quadratic formula, which, given a quadratic equation of the form
+</p>
+<div class="math">\begin{equation*}
+ax^2 + bx + c = 0,
+\end{equation*}</div>
+<p>
+says that the solutions of this equation are given by the pair of values
+</p>
+<div class="math">\begin{equation*}
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{equation*}</div>
+<p>
+The first time one encounters this formula, they learn that the number <span class="math">\(b^2 - 4ac\)</span> is called the <em>discriminant</em>, and that the quadratic equation has no solution if this value is negative, since one cannot take the square root of a negative number.</p>
+<p>Of course, one can't take the square root of a negative number and obtain a real number, but we've seen that the complex numbers are specifically constructed so that we can take square roots of negative numbers. The imaginary unit <span class="math">\(i\)</span> is after all defined to be <span class="math">\(\sqrt{-1}\)</span>.  By expanding our number system and considering complex numbers, we can therefore see from this formula that all quadratic equations can be solved - we just have to use complex numbers for the solution in the case that the discriminant is negative. The Fundamental Theorem of Algebra, moreover, says that roots can be found for any polynomial, if one allows for complex number solutions.</p>
+<h3>Next Time - The Quaternions</h3>
+<p>With this understanding of the real and complex number system, we're ready to actually define the quaternions in the next post.  We'll see that they are a four-dimensional extension of the complex numbers that has many of the same properties of the complex numbers, but with a few major differences as well.  </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/thesis.html">thesis</a>
+      <a href="http://www.josephthurman.com/tag/quaternions.html">quaternions</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
