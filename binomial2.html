@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="In the previous post introducing the Binomial Options Pricing Model, we discussed a very simple model for the movement of stock prices. In that model, we assumed that at the end of a certain period of time, the value of a stock could take on one of two possible values …" />
+<meta name="keywords" content="finance, binomial-model">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="Binomial Options Pricing Model"/>
+<meta property="og:description" content="In the previous post introducing the Binomial Options Pricing Model, we discussed a very simple model for the movement of stock prices. In that model, we assumed that at the end of a certain period of time, the value of a stock could take on one of two possible values …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/binomial2.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-03-02 14:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Finance"/>
+<meta property="article:tag" content="finance"/>
+<meta property="article:tag" content="binomial-model"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; Binomial Options Pricing Model</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="binomial2">Binomial Options Pricing Model</h1>
+    <p>
+          Posted on Fri 02 March 2018 in <a href="http://www.josephthurman.com/category/finance.html">Finance</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>In the <a href="http://www.josephthurman.com/binomial1.html">previous post</a> introducing the Binomial Options Pricing Model, we discussed a very simple model for the movement of stock prices. In that model, we assumed that at the end of a certain period of time, the value of a stock could take on one of two possible values.  We then used a variety of arguments, including replication and risk-neutral pricing, to determine a price for a call option on the stock.  </p>
+<p>In this post, we'll see how this model can be improved to predict the movement of stock prices more accurately. We'll also make some simple modifications that allow us to consider some of the complicating factors we ignored in the last post, like interest rates.</p>
+<h3>The Two-Step Model</h3>
+<p>Let's return to the example from the previous post, in which we assumed that a stock worth &dollar;100 today would be worth either &dollar;80 or &dollar;120 in six months' time.  We used this assumption to find a price for a call option on the stock, expiring at the end of the same six-month period with a strike price of &dollar;100.  </p>
+<p>This model essentially assumed that there would be only one movement in the stock price in 6 months, or put another way, that we would only observe the stock price once over the life of the option. What if we looked multiple times?</p>
+<p>In particular, instead of assuming that the stock could either increase or decrease by &dollar;20 over a six-month period, let's assume that the stock can either increase or decrease by &dollar;10 over each three-month period.  There are now four different possibilities for how the stock price can change as over the six-month period - it can either move up twice, move up and then down, move down and then up, or move down twice.  Letting <span class="math">\(u, d\)</span> denote up and down movements, respectively, and using <span class="math">\(S\)</span> to denote the stock price today, <span class="math">\(S_{u}\)</span> to denote the price after an up movement, <span class="math">\(S_{du}\)</span> denote the price after a down and then an up movement, etc., we're left with the following tree of possible prices for the stock.</p>
+<p><img alt="Two-Step Binomial Tree" src="http://www.josephthurman.com/tree1.png"></p>
+<p>It's important to note that the price after an up movement in the first period followed by a down movement in the second period is the same as the price after a down movement followed by an up movement.  This will simplify the computations, especially when we fully generalize the model to include many intermediate steps.  The order of the up and down movements does not matter, only the total number of up movements and the total number down movements.</p>
+<p>How do we find a price for the option under this new model? The method is to view this larger tree as a collection of smaller one-step models and repeatedly apply the pricing methods we described in the last post.  In particular, we can zoom in on just one part of the tree, the portion consisting of <span class="math">\(S_u\)</span> and the branches to <span class="math">\(S_{uu}\)</span> and <span class="math">\(S_{ud}\)</span>. If the final price is <span class="math">\(S_{uu} = 120\)</span>, then the option will be worth &dollar;20, and if the final price is <span class="math">\(S_{ud} = 100\)</span>, then the option will be worth &dollar;0.  We can then find the value of the option in three months time, assuming that the stock increased over the first period.  The easiest method for this is to use risk-neutral pricing.  We can compute that the risk-neutral probability in this situation is <span class="math">\(p = 1/2\)</span> (just as it was in the last post), and therefore the value of the option at the <span class="math">\(S_u\)</span> node of the tree is
+</p>
+<div class="math">\begin{equation*}
+C_u = 20 (1/2) + 0 (1/2) = 10
+\end{equation*}</div>
+<p>We can repeat this computation to find the value of the option at the <span class="math">\(S_d\)</span> node in the tree, that is, the value of the option in three month's time under the assumption that the stock first moves down.  From an initial value of <span class="math">\(S_d = 90\)</span>, the stock price can either move to <span class="math">\(S_{dd} = 80\)</span> or <span class="math">\(S_{du} = 100\)</span>.  In either case, the option will be worthless in six months (the strike price is 100), and therefore the value of the option at the <span class="math">\(S_d\)</span> node is zero.</p>
+<p>Finally, if we know that the values <span class="math">\(C_u = 10\)</span> and <span class="math">\(C_d = 0\)</span> for the option at the <span class="math">\(S_u\)</span> and <span class="math">\(S_d\)</span> nodes, then we can work backwards to find the initial value of the option.  The risk-neutral probability will once again be <span class="math">\(p = 1/2\)</span>, and so the value of the option today is
+</p>
+<div class="math">\begin{equation*}
+C = 10 \times (1/2) + 0 \times (1/2) = 5
+\end{equation*}</div>
+<p>
+The tree with the value of the option at the various nodes is shown below.</p>
+<p><img alt="Option Values in Two-Step Binomial Tree" src="http://www.josephthurman.com/tree2.png"></p>
+<p>This value is different from the value of &dollar;10 we found in the last post, but it's not hard to see why.  In the one-step model, we only had two possible values for the stock price at expiry, one in which the option has value (an up movement) and one in which it does not (a down movement). In the two step model, we have assumed that there are more possible values for the final price of the stock, and the option is worthless for these new possible values.  Thus under the new model there will be fewer opportunities to exercise the option and gain value from it, and so the option is worth less in the new model.</p>
+<p>It's clear from the above example how we could continue to improve the model - instead of dividing the six-month time period into two three-month periods, we could divide it into 3, 4, 5, or even more periods.  Perhaps we could divide the interval into 20 periods, and the price could move up or down by one dollar in each period.  This would still imply that the stock price at the end of six months has a value between &dollar;80 or &dollar;120, but in this case any dollar value between these two numbers is also a possible outcome in the model, which is a much more realistic model than the two or three values we've had in the examples so far. Before discussing this generalization, though, we will consider how interest rates affect the model.  </p>
+<h3>Adding Interest Rates</h3>
+<p>So far, we've ignored how interest rates and the time value of money would change our computations.  For example, in computing the value <span class="math">\(C_u\)</span> above, we assumed that if the option was expected to be worth &dollar;10 at the end of the six-month period, its value at three months should be the same.  This is not the case, though, as the value of &dollar;10 today is more than the value of &dollar;10 in three month's time.  After all, if an investor has &dollar;10 today, they could always a put the money into a completely safe investment, perhaps something like a savings account, and earn a small amount of interest so that, after three months time they have &dollar;10.01 instead of just &dollar;10.  </p>
+<p>The value of a payment therefore depends not only on the actual dollar amount of the payment, but on when the payment is made.  To be consistent in finding prices for financial assets, we need a way to find the value today of a payment made in the future, so that all prices under consideration are always in "today's" dollars. The idea is that if one will receive &dollar;<span class="math">\(Y\)</span> in <span class="math">\(T\)</span> month's time, the value of that payment <em>today</em> is the amount of money that would have to be invested today in a risk-free investment so that in <span class="math">\(T\)</span> months that safe investment will have grown to <span class="math">\(Y\)</span>.</p>
+<p>Risk-free investments do not actually exist in truth, but mathematical finance generally assumes that such investments are available. This is because short-term bonds issued by stable governments in their own currency are very safe investments. There is of course the possibility that, say, the US government may default on its debt, but this would have such major economic effects that accurately pricing options would be the least of an investor's worries. Still, because these assets have no risk, the rate of return is small - the current yield on three-month treasury bills is around 1.5% annually. The rate of return of the risk-free investment is appropriately known as the <em>risk-free rate</em>.</p>
+<p>To simplify computations, we'll assume that all interest is compounded continuously.  That is, if <span class="math">\(r\)</span> is the risk-free interest rate, written as a decimal (so that 1.5% = 0.015), then if one invests <span class="math">\(P\)</span> dollars for a period of <span class="math">\(t\)</span> years, the investment will grow to <span class="math">\(Pe^{rt}\)</span>, where <span class="math">\(e = 2.71828\ldots\)</span> is Euler's number, the base of the natural logarithm. On the other hand, a cash payment of <span class="math">\(X\)</span> dollars at some time <span class="math">\(t\)</span> years in the future will have a present value today of <span class="math">\(Xe^{-rt}\)</span>. We'll use this present value formula in the next section to compute the value of an option today if its future expected value is known. The number <span class="math">\(e^{-rt}\)</span> is called a <em>discount factor</em>, since it is used to discount future values of a cash flow to their smaller present values.  </p>
+<p>Note that the risk-free interest rate, and the related discount factor, are only appropriate for finding the present value of risk-free assets.  In general, if we wanted to find the present value of a future payment that had some amount of uncertainty, we'd need to choose an interest rate that reflected the uncertainty.  We could think of this as the rate of return that could be expected from investing our money in an equally risky asset. The expected values of the options we are pricing are technically risky, so in principle we should be finding a discount factor that reflects those risks.  This represents one more advantage of risk-neutral pricing - we can avoid the work of having to decide on a discount factor that is appropriate to the risk of the option. Instead, we ignore the risk, as we've done before, and use the risk-free interest rate to simplify our computations.</p>
+<h3>The Many-Step Model</h3>
+<p>With interest rates figured out, we're now ready to give the actual model. There's just one final change to make. In our two-step example above, we've assumed that the stock price moves by adding or subtracting fixed amounts.  In our final model, we'll instead assume that the price moves by a fixed <em>percentage</em> in each period.  This turns out to more accurately model the movement of stock prices, as we'll discuss in a later post.</p>
+<p>We'll also abandon the numbers we used in our specific examples and replace them with variables. Let <span class="math">\(S\)</span> denote the price of the stock today, and let <span class="math">\(T\)</span> denote the time until expiry of the option, in years.  We'll divide this period into <span class="math">\(N\)</span> equal time intervals, of length <span class="math">\(\Delta T = T / N\)</span>.  Finally, assume that in each time period, the stock price changes by either multiplying by <span class="math">\(u\)</span>, which we consider as an up movement, or by <span class="math">\(d\)</span>, the down movement. For example, if we assume that a stock can grow by 2% over a short time interval, then we pick <span class="math">\(u = 1.02\)</span>.  Thus after one period, the stock will have a value of either <span class="math">\(Su\)</span> or <span class="math">\(Sd\)</span>.  We need to assume <span class="math">\(d &lt; e^{r\Delta T} &lt; u\)</span>, where <span class="math">\(r\)</span> is the risk-free interest rate, to avoid the possibility of arbitrage.</p>
+<p>We can then consider a tree of possible prices for the stock.  If <span class="math">\(k\)</span> time periods have passed, then the stock price at that time is determined by the number of up and down movements in the stock.  Since the order of the stock movements does not matter, we have that if <span class="math">\(k\)</span> time periods have passed and the stock price has increased over <span class="math">\(m\)</span> of those periods (and therefore decreased over <span class="math">\(k-m\)</span> of those periods), the price of the stock at that time is
+</p>
+<div class="math">\begin{equation*}
+S(k,m) = Su^{m}d^{k-m}
+\end{equation*}</div>
+<p>
+This explains why this model is known as the binomial model - the price of the stock could be determined by flipping a coin <span class="math">\(k\)</span> times and assuming that the stock moves up each time a head appears. More properly, we should consider a weighted coin that has a probability <span class="math">\(p\)</span> of coming up heads. The so-called "binomial distribution" is the distribution in probability used to model coin flips.</p>
+<p>We can now use the tree of stock prices produced by this formula to find the value of the option.  Assume we're pricing a call option with strike price <span class="math">\(K\)</span>. We can easily find the value of the option at the expiry in each of the possible nodes of the tree.  Under our model, the price of the stock has <span class="math">\(N+1\)</span> possible values at expiry, depending on the number of up-movements in the stock.  For each of these possible stock prices, the option is worth
+</p>
+<div class="math">\begin{equation*}
+C(N,m) = \max(S(N,m) - K, 0)
+\end{equation*}</div>
+<p>
+(Here <span class="math">\(m\)</span> can be any of the values <span class="math">\(m = 0,1, \ldots, N\)</span>). Interpreting the above formula, the option is worth the difference between the price of the stock and the strike price if the stock is worth more than the strike, and zero otherwise (the case in which the option is not exercised).</p>
+<p>Once we know the value of the option at the end of the tree, we can work backward as before to figure out the value of the option at every node. Let <span class="math">\(C(k,m)\)</span> denote the value of the option at the node that is <span class="math">\(k\)</span> steps into the tree with <span class="math">\(m\)</span> up movements in the stock price.  The two following nodes in the tree are <span class="math">\(C(k+1,m+1)\)</span> (if the price moves up) and <span class="math">\(C(k+1,m)\)</span> (if the price moves down).  If we let <span class="math">\(p\)</span> denote the risk-neutral probability of a movement up, then the expected value of the option in the next step is
+</p>
+<div class="math">\begin{equation*}
+p C(k+1,m+1) + (1-p) C(k+1,m)
+\end{equation*}</div>
+<p>
+and so the value of the option at <span class="math">\(C(k,m)\)</span> is the above expected value, discounted to today using the risk-free interest rate.  That is
+</p>
+<div class="math">\begin{equation*}
+C(k,m) = e^{-r \Delta T} \left( p C(k+1,m+1) + (1-p) C(k+1,m) \right)
+\end{equation*}</div>
+<p>
+With this formula, we can work our way backward through the tree until we can compute the value <span class="math">\(C(0,0)\)</span>, which is the value of the option today, and therefore the price.</p>
+<p>Finally, we need to find the value of the risk-neutral probability.  From our discussion in the last section, it should be chosen so that the stock price at any node in the tree is equal to the expected value of the stock price in the child nodes, appropriately discounted. That is, we need to chose the <span class="math">\(p\)</span> such that the following formula is satisfied:
+</p>
+<div class="math">\begin{equation*}
+S(k,m) =  e^{-r \Delta T} \left( p S(k+1,m+1) + (1-p) S(k+1,m) \right)
+\end{equation*}</div>
+<p>
+Using the formula <span class="math">\(S(k,m) = Su^{m}d^{k-m}\)</span>, we can solve this equation to find that the risk-neutral probability is
+</p>
+<div class="math">\begin{equation*}
+p = \frac{e^{r \Delta T} - d}{u-d}
+\end{equation*}</div>
+<p>Note that this formula does not depend on the values of <span class="math">\(k\)</span> and <span class="math">\(m\)</span>, so that the risk-neutral probability is the same everywhere in the tree. In contrast, we could consider using the replication method discussed in the previous post to compute the value of the option at each node. If we tried this, however, we'd notice that in general the payoffs at the child nodes are different as we move through the tree. Therefore we'd have to find a different replicating portfolio for every node, which would be a lot more work. Using risk-neutral pricing allows us to avoid these unnecessary computations and greatly simplifies the model.</p>
+<h3>Summarizing the Model</h3>
+<p>And that's it! After a good deal of work, we've found a model that can be used to find the price of a European call option on a stock.  The model is as follows:</p>
+<ol>
+<li>
+<p>Divide time until expiry of the option into <span class="math">\(N\)</span> intervals.  On each interval, assume that the stock can move up or down by a factor of <span class="math">\(u\)</span> or <span class="math">\(d\)</span>, respectively.</p>
+</li>
+<li>
+<p>This assumption generates a tree of possible prices for the stock.  At the leaves of the tree, we can find the value of the option for the given stock price represented by that node by using the payoff determined by the option contract.</p>
+</li>
+<li>
+<p>Working back through the tree, we can find the value of the option at any node as long as we know the value of the option at the two child nodes.  We do this by finding the expected value of the option at those two child nodes using the risk-neutral probability, then discounting that value using the risk-free interest rate.</p>
+</li>
+<li>
+<p>This process continues until the value of the option at the root node, representing the value today, is found, which is the price of the option.</p>
+</li>
+</ol>
+<p>The model uses three properties of the option that are known, namely the stock price today, the strike price of the option, and the time until expiry. It also takes as input the value <span class="math">\(r\)</span> for the risk-free interest rate available in the market. The model also has three "tuning parameters" that we can choose ourselves, namely the size of the movements <span class="math">\(u\)</span> and <span class="math">\(d\)</span> and the number of steps in the tree <span class="math">\(N\)</span>. If we want our model to be useful, we still need to decide how to choose these parameters.</p>
+<p>As we saw above, our model is more accurate the more steps we include. Of course increasing <span class="math">\(N\)</span> increases the number of nodes in our tree, and so larger values of <span class="math">\(N\)</span> will take longer to compute.  Therefore, we should choose <span class="math">\(N\)</span> as large as possible while still making sure that our algorithm is computationally feasible. We'll discuss this more in the next post, when we actually implement this model in Python and analyze its performance.</p>
+<p>Choosing <span class="math">\(u\)</span> and <span class="math">\(d\)</span> is more difficult. There are good techniques for choosing these values, but understanding them requires making some more explicit assumptions about the movement of stock prices which we'll discuss in a later post. For now, it's enough to say that choosing <span class="math">\(u\)</span> and <span class="math">\(d\)</span> amounts to forecasting the future movement of the stock. We'll therefore choose them somewhat arbitrarily, picking feasible values and tweaking them as necessary so that the range of possible stock prices in the model accords with whatever prediction about the future movement of the stock we wish to make.  </p>
+<h3>Next Time - Implementing the Model</h3>
+<p>Now that we've found a model we can use, it's time to actually put it into practice.  In the next post, we'll implement this model in Python and run it on a few simple examples. We'll also analyze its performance, and see how our implementation can be used to price other types of options as well.  </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/finance.html">finance</a>
+      <a href="http://www.josephthurman.com/tag/binomial-model.html">binomial-model</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
