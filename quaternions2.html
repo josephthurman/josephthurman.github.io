@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="In our last post we laid the foundation necessary to understand the quaternions, a 4-dimensional number system with some interesting properties that are applicable in higher-dimensional geometry. We didn&#39;t actually define or discuss the quaternions in that post, but instead discussed the real and complex numbers. It might be helpful …" />
+<meta name="keywords" content="thesis, quaternions">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="Introducing the Quaternions"/>
+<meta property="og:description" content="In our last post we laid the foundation necessary to understand the quaternions, a 4-dimensional number system with some interesting properties that are applicable in higher-dimensional geometry. We didn&#39;t actually define or discuss the quaternions in that post, but instead discussed the real and complex numbers. It might be helpful …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/quaternions2.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-03-01 20:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Thesis"/>
+<meta property="article:tag" content="thesis"/>
+<meta property="article:tag" content="quaternions"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; Introducing the Quaternions</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="quaternions2">Introducing the Quaternions</h1>
+    <p>
+          Posted on Thu 01 March 2018 in <a href="http://www.josephthurman.com/category/thesis.html">Thesis</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>In our last post we laid the foundation necessary to understand the quaternions, a 4-dimensional number system with some interesting properties that are applicable in higher-dimensional geometry.  We didn't actually define or discuss the quaternions in <a href="http://www.josephthurman.com/quaternions1.html">that post</a>, but instead discussed the real and complex numbers.  It might be helpful to go back and skim that post again, especially the section defining the operations with complex numbers, as many of the properties of the quaternions are analogous to properties of the complex numbers.  With that preparation, though, we're finally ready to introduce and define the quaternions.</p>
+<h3>The Quaternions</h3>
+<p>We saw that the complex numbers can be constructed by considering a new number <span class="math">\(i\)</span> with the property that <span class="math">\(i^2 = -1\)</span>, and then defining addition and multiplication of numbers of the form <span class="math">\(a + bi\)</span> in a natural way. But why stop there? We can define other new numbers, which we'll denote by <span class="math">\(j\)</span> and <span class="math">\(k\)</span>, and consider numbers of the form <span class="math">\(a + bi + cj + dk\)</span> where <span class="math">\(a,b,c,d\)</span> are real numbers.  We call the collection of numbers of this form the <em>quaternions</em>, which we denote by <span class="math">\(\mathbb{H}\)</span>.  Here <span class="math">\(\mathbb{H}\)</span> stands for Hamilton, as in <a href="https://en.wikipedia.org/wiki/William_Rowan_Hamilton">William Rowan Hamilton</a>, the Irish mathematician who first constructed the quaternions. (The perhaps more natural <span class="math">\(\mathbb{Q}\)</span> is already taken, as this is used to denote the rational numbers.) We can see that the quaternions extend the complex numbers <span class="math">\(\mathbb{C}\)</span>, since we can consider a complex number <span class="math">\(a+bi\)</span> as a quaternion <span class="math">\(a + bi + 0j + 0k\)</span> where the <span class="math">\(j, k\)</span> part of the quaternion are simply 0.  The quaternions are evidently a four-dimensional number system, as a single quaternion actually represents a set of four real numbers.  </p>
+<p>From the form <span class="math">\(q = a + bi + cj + dk\)</span> it is easy to see how to add quaternions.  We have, for two quaternions <span class="math">\(q_0, q_1\)</span>, that
+</p>
+<div class="math">\begin{equation*}
+q_0 + q_1 = (a_0 + b_0i + c_0j + d_0k) + (a_1 + b_1i + c_1j + d_1 k) = (a_0 + a_1) + (b_0 + b_1)i + (c_0 + c_1)j + (d_0 + d_1)k,
+\end{equation*}</div>
+<p>
+that is, we can add quaternions simply by "adding like terms."  Subtraction of quaternions is defined similarly.  </p>
+<p>The more difficult property to define is multiplication.  As in the case of the complex numbers, the crucial point is to understand how to define multiplication amongst the "new" numbers <span class="math">\(i, j, k\)</span>.  The appropriate multiplication rules are what Hamilton discovered when he constructed the quaternions.  Apparently he was walking with his wife one day along a canal in Dublin when he suddenly realized the correct multiplication rule, and he was so excited that he immediately carved the formula into a <a href="https://en.wikipedia.org/wiki/History_of_quaternions#Hamilton's_discovery">bridge along the canal</a>:
+</p>
+<div class="math">\begin{equation*}
+i^2 = j^2 = k^2 = ijk = -1
+\end{equation*}</div>
+<p>
+Here we use juxtaposition to denote multiplication, that is, <span class="math">\(ij\)</span> means the same thing as <span class="math">\(i \times j\)</span>. We'll sometimes also denote multiplication with a small dot, e.g., <span class="math">\(i \cdot j\)</span>.</p>
+<p>The above multiplication rule is more commonly written in the equivalent form
+</p>
+<div class="math">\begin{equation*}
+i^2 = j^2 = k^2 = -1 \text{ and } ij = k = -ji.
+\end{equation*}</div>
+<p>
+This latter form makes the most important feature of quaternion multiplication more obvious: it is <em>not commutative</em>.  We say an operation is commutative if the order of the operands does not matter.  For example, addition of real numbers is commutative because <span class="math">\(a + b = b + a\)</span> for all real numbers.  Likewise the multiplication of real numbers is commutative, as are both addition and multiplication of complex numbers. Subtraction of real numbers is not commutative, since in general <span class="math">\(a - b \neq b - a\)</span>.  To say that quaternionic multiplication is not commutative is to say that if <span class="math">\(p, q\)</span> are quaternions, then in general we have that <span class="math">\(p q \neq q p\)</span>.  </p>
+<p>Using the above rules for multiplying the elements <span class="math">\(i, j, k\)</span>, we can define the product of any two quaternions in a way that's very similar to the method for the complex numbers, by treating <span class="math">\(i, j, k\)</span> as variables but simplifying any multiplication between these numbers using the multiplication rules above.  After a simple but somewhat tedious computation, we arrive at the following general formula for multiplication of any two quaternions:
+</p>
+<div class="math">\begin{align*}
+q_0 q_1 &amp;= (a_0 + b_0i + c_0j + d_0k) \cdot (a_1 + b_1i + c_1j + d_1k) \\
+&amp;= (a_0 a_1 - b_0 b_1 -c_0 c_1 - d_0 d_1)+ (a_1 b_0 + a_0 b_1 - c_1 d_0 + c_0 d_1) i \\
+ &amp;\hspace{.25in}+ (a_1 c_0 + a_0 c_1 + b_1 d_0 - b_0 d_1)j + (-b_1 c_0 + b_0 c_1 + a_1 d_0 + a_0 d_1)k
+\end{align*}</div>
+<p>Finally, we'd like to consider quaternionic division as well.  Similar to the complex case, we will actually define an inverse operation, and again this will be based on a conjugation operation.  If <span class="math">\(q = a + bi + cj +dk\)</span> is a quaternion, then we will call <span class="math">\(a\)</span> the <em>real part</em> and <span class="math">\(bi + cj + dk\)</span> the <em>imaginary part</em>, and once again the complex conjugation operation will consist of switching the sign of the imaginary part, that is
+</p>
+<div class="math">\begin{equation*}
+\overline{q} = a - bi - cj - dk
+\end{equation*}</div>
+<p>
+Just as in the case of complex numbers, we can observe that <span class="math">\(|q|^2 = q \overline{q} = a^2 + b^2 + c^2 +d^2\)</span> is a real number (i.e., has no imaginary part), and that the inverse of a quaternion will be given by
+</p>
+<div class="math">\begin{equation*}
+q^{-1} = \frac{1}{|q|^2}\overline{q} = \frac{a}{a^2+b^2+c^2+d^2} + \frac{-b}{a^2+b^2+c^2+d^2}i + \frac{-c}{a^2+b^2+c^2+d^2}j + \frac{-d}{a^2+b^2+c^2+d^2}k
+\end{equation*}</div>
+<p>Fractions of quaternions, are actually not exactly defined since multiplication is not commutative.  If we'd like to take the quaternionic fraction <span class="math">\(\frac{q}{p}\)</span>, then, using the understanding that "division" means the same thing as "multiplying by the inverse", the value of the division should be the same as the number obtained by multiplying <span class="math">\(q\)</span> by <span class="math">\(p^{-1}\)</span>.  However there are two ways to do this multiplication, either <span class="math">\(p^{-1}q\)</span> or <span class="math">\(qp^{-1}\)</span>, that will in general not be the same since quaternionic multiplication is not commutative.  Therefore we will never write quaternions as fractions, and instead only consider multiplication by the inverse so that the order of the operands is clear.</p>
+<p>As a note on terminology, in the last post we said that the real numbers and the complex numbers are both examples of <em>fields</em> since they possess addition, subtraction, multiplication, and division operations. One of the additional requirements of a field that went unmentioned in that post is that the multiplication in a field should be commutative. The quaternions are therefore not a field.  Instead, the quaternions are known as a "division algebra." The term "skew field" is also used in older books, but is less common today.</p>
+<h3>And Beyond</h3>
+<p>In the previous post, we saw that we could extend the one-dimensional real number system using the two-dimensional complex numbers.  In this post, we extended the complex numbers by the four-dimensional quaternions. Each time, we've managed to extend the number system by doubling the dimension. Could we keep going? Are there further number systems with dimension 8, 16, 32, and so on?</p>
+<p>The answer is yes, although the number systems that arise in this way are not generally as useful.  Each extension process we have discussed so far is an example of a general construction called the <a href="https://en.wikipedia.org/wiki/Cayley–Dickson_construction">Cayley-Dickson construction</a>.  This is a procedure that takes one of the number systems we have been discussing and produces a new number system of twice the dimension.  </p>
+<p>The new number systems constructed by this process, though, always lose some of the desirable algebraic properties of the starting point.  For example, in moving from <span class="math">\(\mathbb{R}\)</span> to <span class="math">\(\mathbb{C}\)</span>, we lose the property that the real numbers are ordered. Similarly, we lose the commutativity of multiplication when we extend from <span class="math">\(\mathbb{C}\)</span> to <span class="math">\(\mathbb{H}\)</span>.  </p>
+<p>We could apply the Cayley-Dickson construction again to the quaternions to produce an 8-dimensional number system called the <a href="https://en.wikipedia.org/wiki/Octonion">octonions</a>. In constructing these numbers, we lose the property of <em>associativity</em> of multiplication, which is the property that the result of multiplication is independent of the grouping.  That is, given three numbers <span class="math">\(a, b, c\)</span>, we could form the product of these numbers in two different ways (fixing the order), as either <span class="math">\((ab)c\)</span> or as <span class="math">\(a(bc)\)</span>. The reals, complexes, and quaternions are all associative, in that this grouping does not matter, e.g.,
+</p>
+<div class="math">\begin{equation*}
+(2 \cdot 3) \cdot 4 = 6 \cdot 4 = 24 = 2 \cdot 12 = 2 \cdot (3 \cdot 4)
+\end{equation*}</div>
+<p>
+This is no longer the case for the octonions. Even so, the octonions are still useful in mathematics and also in some physics applications, although we won't discuss the octonions any further.  One can continue past the octonions as well (the next number system is called the <a href="https://en.wikipedia.org/wiki/Sedenion">sedenions</a>) but these further number systems are not commonly studied by mathematicians - after repeating the Cayley-Dickson construction so many times they have lost enough algebraic properties that they are no longer as useful.</p>
+<h3>Why the Quaternions?</h3>
+<p>In the above we've seen what the quaternions are from an axiomatic perspective. We've defined a quaternion as a collection of 4 real numbers, and given ways to add, subtract, multiply, and divide quaternions. This is interesting, but it may make the quaternions seem like an odd curiosity. Have we just found a set of weird rules for manipulating quadruplets of numbers, or do the quaternions actually amount to something?.</p>
+<p>The complex numbers have something of this flavor, as a weird system for manipulating pairs of numbers. But we saw in the previous post that they actually solve an important problem: they're an algebraically closed extension of the real numbers. What problems were the quaternions meant to solve? Why did Hamilton think they were important enough to vandalize a bridge when he discovered them? In our  next few posts, we'll answer that question, when we see that the quaternions are intimately related with the geometry of rotations in three dimensions.  </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/thesis.html">thesis</a>
+      <a href="http://www.josephthurman.com/tag/quaternions.html">quaternions</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
