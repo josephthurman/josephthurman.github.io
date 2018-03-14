@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="In the previous post, we first encountered the quaternions, giving an essentially algebraic definition by defining a quaternion as a set of four real numbers and defining operations to add, subtract, multiply, and divide these quadruplets. But my thesis work is in geometry, not algebra, and so it still remains …" />
+<meta name="keywords" content="thesis, quaternions, complex numbers">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="Vectors and the Complex Numbers"/>
+<meta property="og:description" content="In the previous post, we first encountered the quaternions, giving an essentially algebraic definition by defining a quaternion as a set of four real numbers and defining operations to add, subtract, multiply, and divide these quadruplets. But my thesis work is in geometry, not algebra, and so it still remains …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/geometryofcomplexnumbers1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-03-14 18:30:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Thesis"/>
+<meta property="article:tag" content="thesis"/>
+<meta property="article:tag" content="quaternions"/>
+<meta property="article:tag" content="complex numbers"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; Vectors and the Complex Numbers</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="geometryofcomplexnumbers1">Vectors and the Complex Numbers</h1>
+    <p>
+          Posted on Wed 14 March 2018 in <a href="http://www.josephthurman.com/category/thesis.html">Thesis</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>In the <a href="http://www.josephthurman.com/quaternions2.html">previous post</a>, we first encountered the quaternions, giving an essentially algebraic definition by defining a quaternion as a set of four real numbers and defining operations to add, subtract, multiply, and divide these quadruplets.  But my thesis work is in geometry, not algebra, and so it still remains to understand why the quaternions are interesting from a geometric perspective.  Uncovering the geometry associated to the quaternions will be the goal of the next few posts in this series.</p>
+<p>Before considering the geometry of the quaternions, though, it will be helpful to understand the geometry of the complex numbers first.  In the same way that understanding the algebraic properties of the <a href="http://www.josephthurman.com/quaternions1.html">complex numbers</a> made it easier to understand the quaternions, we'll see that it will be much easier to understand the quaternions if we understand the simpler, 2-dimensional geometry of the complex numbers.</p>
+<p>In this post, we'll describe the method for understanding complex numbers as geometric objects and consider the interpretation of the addition of complex numbers in this setting. In our next post, we'll extend these insights to understand the geometrical significance of complex multiplication.  </p>
+<h3>Complex Numbers as 2-Dimensional Vectors</h3>
+<p>Recall from that earlier post that the set of complex numbers <span class="math">\(\mathbb{C}\)</span> is the set of numbers of the form <span class="math">\(z = a + bi\)</span>, where <span class="math">\(a, b\)</span> are real numbers and <span class="math">\(i^2 = -1\)</span> is the imaginary unit.  In that post we also gave methods to add, subtract, multiply, and divide complex numbers, that is, we described the algebraic properties of the complex numbers.  To understand the geometric properties of the complex numbers, we need a way to picture them.  </p>
+<p>We already have a geometric understanding of the real numbers, as the set of points along a number line.  Since complex numbers consist of a pair of real numbers, we can picture them using a pair of number lines. Putting one of those number lines perpendicular to the other, we have a standard pair of axes that we can use to plot points that represent complex numbers.  This pair of axes is just like the usual Cartesian coordinate system, or <span class="math">\(xy\)</span>-plane, that is used for graphing functions. In this context, though, we consider the horizontal axis to be the <em>real</em> axis, where we plot the value of the real part (denoted by <span class="math">\(a\)</span> above) of the complex number, and the vertical axis is the <em>imaginary</em> axis, where we plot the value of the imaginary part (denoted by <span class="math">\(b\)</span>).  This is illustrated below, where we show the 2-dimensional plane representing the complex numbers and plot a variety of points on that plane.</p>
+<p><img alt="The Complex Plane" src="http://www.josephthurman.com/complexplane.png"></p>
+<p><em>The Complex Plane</em></p>
+<p>Instead of just considering complex numbers as points, we can also consider them as <em>vectors</em>. Geometrically, this means that we can think of a complex number <span class="math">\(z = a+bi\)</span> as not a point but an arrow, beginning at the origin of the plane (the point <span class="math">\((0,0)\)</span>, or the complex number <span class="math">\(0 + 0i\)</span>, where the two axes intersect) and extending to the point <span class="math">\(a+bi\)</span>.  Illustrating this with the same points we plotted above gives the following plot.</p>
+<p><img alt="Vectors in the Complex Plane" src="http://www.josephthurman.com/complexvectors.png"></p>
+<p><em>Vectors in the Complex Plane</em></p>
+<p>One way to think about vectors is to consider how they are used in physics, where there is a distinction made between <em>scalar</em> quantities and <em>vector</em> quantities.  Scalar quantities are those that can be specified with a single number, like mass or temperature.  Vector quantities, on the other hand, require multiple numbers, often interpreted as a <em>magnitude</em> and <em>direction</em>. For example, velocity is a vector quantity, because it consists of both a magnitude, which is called speed (e.g., 60 miles per hour) and a direction of movement (e.g., due north). A velocity (in two dimensions) could be pictured as an arrow in the plane, as above, where one imagines the moving object at the center of the plane, with the arrow pointing in its direction of movement and the length of the arrow corresponding to speed (longer being faster).</p>
+<h3>Vector Addition</h3>
+<p>Another example of a vector quantity is change in position, which in physics is called <em>displacement</em>. If a person begins at one location, and after some amount of time ends up in a different location, then we can describe their movement by two numbers, the magnitude of the distance between the locations (e.g., 5 miles) and the direction that they traveled (south east, perhaps).  </p>
+<p>This leads to a natural problem - how to combine changes in position? For example, a person could begin at home, then travel 5 miles southeast to go to school, and then travel 2 miles northeast to go to work. What is their final location relative to their starting position, that is, relative to home? Put another way, if they wanted to travel directly to work, how far should they travel and in what direction?</p>
+<p>We can find the answer fairly easily by plotting the various locations. We can draw a standard 2-dimensional coordinate system, and place the "home" location at the origin.  We can then draw an arrow depicting the change in position from home to school, shown in red in the picture below, and likewise for the change from school to work, shown in blue below.  We can then draw an arrow from the origin to the head of the blue arrow, and this arrow represents the change in position to go directly from home to work.</p>
+<p><img alt="Vector Addition for Changing Locations" src="http://www.josephthurman.com/vectoraddition1.png"></p>
+<p><em>Vector Addition for Changing Locations</em></p>
+<p>With a little computation involving some trigonometry (that will be discussed more in depth in the next post) the black vector has a magnitude of <span class="math">\(\sqrt{29} \approx 5.4\)</span> and the direction, as a compass heading (with north as <span class="math">\(0^\circ\)</span>, east as <span class="math">\(90^\circ\)</span>, etc), is about <span class="math">\(113^\circ\)</span>, or roughly east-southeast.</p>
+<p>The blue arrow as drawn above represents a change in position from school to work.  However, the starting point isn't really important when one considers change in position - all that really matters is that the blue arrow really represents a change in location of traveling 2 miles to the north-east. In fact, all of the above discussion doesn't really have anything to do with the particular starting point - if you start at one spot, then move southeast 5 miles, then move northeast two miles, you'll always end up in the position relative to the starting point of about 5.4 miles away, roughly east-southeast.  </p>
+<p>This is important because when we consider vectors from an abstract mathematical perspective, we always draw them as starting from the origin. Thus, instead of drawing the blue arrow as beginning from the end of the red arrow, we'll draw it as beginning at the origin if we want to consider it as an abstract vector.  </p>
+<p>In fact, we can restate the entire problem in terms of abstract vectors, without thinking of them as related to any particular location. Let <span class="math">\(v\)</span> denote the red vector, as it was drawn above, and let <span class="math">\(w\)</span> denote the blue vector, which we will now draw as starting from the origin. Then the black vector is called the vector sum <span class="math">\(v+w\)</span>.  This is illustrated below.</p>
+<p><img alt="Abstract Vector Addition" src="http://www.josephthurman.com/vectoraddition2.png"></p>
+<p><em>Abstract Vector Addition</em></p>
+<p>This image gives us the rule to add vectors abstractly, which is called the parallelogram rule.  To add vectors, we can draw from the end of the first vector an arrow that has the same length and direction as the second.  The sum vector is then the vector that joins the base of the first arrow to the head of the second. There are two ways to do this, depending on which vector you start with, though both choices give the same result. Note that the two vectors determine a parallelogram, and the sum vector is the diagonal of that parallelogram, hence the name of the rule. In this picture the dotted arrows shown do not represent vectors, since they do not begin at the origin.</p>
+<h3>Addition of Complex Numbers is Vector Addition</h3>
+<p>As we saw above, we can consider complex numbers as vectors, and so vector addition gives us a second way to add complex numbers - we can add them either as complex numbers with the addition procedure defined in the earlier post, or as vectors.  The important point is that both operations are actually the same. Let's illustrate this with an example.  </p>
+<p>Let <span class="math">\(z = 3+ 2i\)</span>, and <span class="math">\(w = -2 + i\)</span>.  Using the rule for the addition of complex numbers, we have that the sum is <span class="math">\(z + w = 1 + 3i\)</span>.  If we consider <span class="math">\(z, w\)</span>, and <span class="math">\(z + w\)</span> as vectors, we have the following picture.</p>
+<p><img alt="Vector Addition of Complex Numbers" src="http://www.josephthurman.com/vectoraddition3.png"></p>
+<p><em>Vector Addition of Complex Numbers</em></p>
+<p>In this particular example, we see that vector addition and complex addition give the same result.  Although we won't formally prove it here, it's not hard to see that this is true for any pair of complex numbers. Thus, if we use our geometrical interpretation of concept number as vectors, we have a geometrical interpretation of the process of addition. Conversely, we could take any problem involving two-dimensional vectors, like the change in position problem above, and restate it in terms of complex numbers.  </p>
+<h3>Next Time - The Geometrical Significance of Multiplication</h3>
+<p>None of this, however, really makes use of the special properties of complex numbers, and complex numbers aren't necessary to understand vectors in two dimensions.  In fact, many people learn about vectors in a high-school physics without ever learning about complex numbers. All of the above work would be no different if we just considered vectors as pairs of numbers <span class="math">\((a,b)\)</span> instead of as pairs of numbers <span class="math">\(a + bi\)</span>.</p>
+<p>The truly interesting features of the complex numbers come into play when one considers multiplication, not addition, and make use of the defining fact of complex numbers that <span class="math">\(i^2 = -1\)</span>.  In the next post, we'll see how to interpret the multiplication of complex numbers geometrically.  </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/thesis.html">thesis</a>
+      <a href="http://www.josephthurman.com/tag/quaternions.html">quaternions</a>
+      <a href="http://www.josephthurman.com/tag/complex-numbers.html">complex numbers</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
