@@ -1,5 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Joseph Thurman</title><link href="http://www.josephthurman.com/" rel="alternate"></link><link href="http://www.josephthurman.com/feeds/all.atom.xml" rel="self"></link><id>http://www.josephthurman.com/</id><updated>2018-03-15T14:00:00-04:00</updated><entry><title>Implementing the Binomial Option Pricing Model</title><link href="http://www.josephthurman.com/binomial3.html" rel="alternate"></link><published>2018-03-15T14:00:00-04:00</published><updated>2018-03-15T14:00:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-03-15:/binomial3.html</id><summary type="html">&lt;p&gt;In the &lt;a href="http://www.josephthurman.com/binomial1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/binomial2.html"&gt;posts&lt;/a&gt; in this series, we've described a model for stock price movements that can be used to find prices of simple European call and put options.  The model works by dividing the life of the option into some number of discrete intervals, and assuming that the stock …&lt;/p&gt;</summary><content type="html">&lt;p&gt;In the &lt;a href="http://www.josephthurman.com/binomial1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/binomial2.html"&gt;posts&lt;/a&gt; in this series, we've described a model for stock price movements that can be used to find prices of simple European call and put options.  The model works by dividing the life of the option into some number of discrete intervals, and assuming that the stock price randomly moves either up or down by a fixed percentage over each short interval.  This gives a tree of possible prices for the stock, and the option's value at each node in this tree can be computed as a discounted expected value of the future value of the option at later nodes in the tree, where the expected value is computed using risk-neutral probability and the discount factor is determined by the risk-free interest rate.  &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Joseph Thurman</title><link href="http://www.josephthurman.com/" rel="alternate"></link><link href="http://www.josephthurman.com/feeds/all.atom.xml" rel="self"></link><id>http://www.josephthurman.com/</id><updated>2018-03-23T11:30:00-04:00</updated><entry><title>Geometry of the Complex Numbers: Rotations</title><link href="http://www.josephthurman.com/geometryofcomplexnumbers2.html" rel="alternate"></link><published>2018-03-23T11:30:00-04:00</published><updated>2018-03-23T11:30:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-03-23:/geometryofcomplexnumbers2.html</id><summary type="html">&lt;p&gt;In the &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html"&gt;previous post&lt;/a&gt; in this series, we introduced a geometrical interpretation of the complex numbers as vectors in the 2-dimensional plane.  That post also explained the geometrical significance of the addition of complex numbers as vector addition. In this post, we'll see how to interpret the multiplication of complex …&lt;/p&gt;</summary><content type="html">&lt;p&gt;In the &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html"&gt;previous post&lt;/a&gt; in this series, we introduced a geometrical interpretation of the complex numbers as vectors in the 2-dimensional plane.  That post also explained the geometrical significance of the addition of complex numbers as vector addition. In this post, we'll see how to interpret the multiplication of complex numbers geometrically.&lt;/p&gt;
+&lt;h3&gt;Polar Coordinates in the Plane&lt;/h3&gt;
+&lt;p&gt;Although we didn't make this explicit in the last post, our discussion of complex numbers as points or vectors in the two-dimensional plane has so far used two different coordinate systems.  We first used the standard Cartesian coordinate system, plotting the real part of the complex number on the horizontal axis and the imaginary part on the vertical axis. This description works equally well if we consider the complex number as just a point or as a vector by drawing an arrow from the origin to that point.&lt;/p&gt;
+&lt;p&gt;The last post also discussed vectors in a physical context, as a way to interpret change in location (displacement), and in that context we instead described the vector using the &lt;em&gt;magnitude&lt;/em&gt; and &lt;em&gt;direction&lt;/em&gt; of the vector (e.g., traveling 5 miles southeast).  Of course, this method gives us a way to name points as well - given a vector, the point that the vector describes is just the endpoint of the vector.&lt;/p&gt;
+&lt;p&gt;This method for naming points in the plane is known as the &lt;em&gt;polar coordinate system&lt;/em&gt;. Instead of describing points using distances along perpendicular axes, this system describes points using the distance from a central point and the angle formed with some reference direction.&lt;/p&gt;
+&lt;p&gt;In order to explain polar coordinates we'll briefly put aside the complex numbers and just consider points in the plane as determined by &lt;span class="math"&gt;\((x,y)\)&lt;/span&gt; coordinates. Given a point &lt;span class="math"&gt;\((x,y)\)&lt;/span&gt; in Cartesian coordinates, what are its coordinates in the polar coordinate system?  The relationship is pictured below:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Polar Coordinate System" src="http://www.josephthurman.com/polarcoordinates.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Polar Coordinate System&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Here &lt;span class="math"&gt;\(r\)&lt;/span&gt; (taken from radius) is the distance from the origin (the magnitude), and the Greek letter theta (&lt;span class="math"&gt;\(\theta\)&lt;/span&gt;) gives the direction, as a counterclockwise angle from the positive x-axis.&lt;/p&gt;
+&lt;p&gt;This way to describe angles is different from the way we described directions in the last post.  There, we used compass headings: due north was &lt;span class="math"&gt;\(0^\circ\)&lt;/span&gt;, which would correspond to the direction of the positive &lt;span class="math"&gt;\(y\)&lt;/span&gt;-axis.  In the polar coordinate system, the positive &lt;span class="math"&gt;\(y\)&lt;/span&gt;-axis is at &lt;span class="math"&gt;\(90^\circ\)&lt;/span&gt;.  Similarly, the positive &lt;span class="math"&gt;\(x\)&lt;/span&gt;-axis is the &lt;span class="math"&gt;\(0^\circ\)&lt;/span&gt; direction in the polar coordinate system, but it is measured as &lt;span class="math"&gt;\(90^\circ\)&lt;/span&gt;, or due east, with compass headings. The reference direction used to measure the angles doesn't ultimately make any real difference, so we'll use the traditional mathematical conventions of measuring angles starting from the positive &lt;span class="math"&gt;\(x\)&lt;/span&gt;-axis.&lt;/p&gt;
+&lt;p&gt;Speaking of conventions, it's also worth pointing out that mathematicians generally use &lt;em&gt;radians&lt;/em&gt; instead of degrees to measure angles.  If once around the circle measures an angle of 360 degrees, the same angle is &lt;span class="math"&gt;\(2\pi\)&lt;/span&gt; radians. For example, a right angle is either &lt;span class="math"&gt;\(90^\circ\)&lt;/span&gt; or &lt;span class="math"&gt;\(\pi/2\)&lt;/span&gt; radians. The distinction between measuring angles in degrees or radians can actually make an important difference in some situations (it's important in calculus, for example), but we won't encounter any such situations in this post, and so  we'll mostly stick to degrees since they are more intuitive to most people.&lt;/p&gt;
+&lt;p&gt;In equations, the relationship is as follows. Given a point &lt;span class="math"&gt;\((x,y)\)&lt;/span&gt; in Cartesian coordinates, its description in polar coordinates is
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+r = \sqrt{x^2 + y^2} \hspace{.25in} \theta = \arctan(y/x)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+where &lt;span class="math"&gt;\(\arctan(x)\)&lt;/span&gt; is the inverse tangent function.  Conversely, given a point &lt;span class="math"&gt;\((r,\theta)\)&lt;/span&gt; in polar coordinates, its description in Cartesian coordinates is
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+x = r \cos \theta \hspace{.25in} y = r \sin \theta
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+If &lt;span class="math"&gt;\(r = 1\)&lt;/span&gt;, then this relationship above is exactly the &lt;a href="https://en.wikipedia.org/wiki/Unit_circle#Trigonometric_functions_on_the_unit_circle"&gt;unit circle&lt;/a&gt; definition of the sine and cosine functions.&lt;/p&gt;
+&lt;h3&gt;The Polar Form of Complex Numbers&lt;/h3&gt;
+&lt;p&gt;We can now go back to considering complex numbers. So far, we've described complex numbers in terms of Cartesian coordinates. For the complex number &lt;span class="math"&gt;\(z = a + bi\)&lt;/span&gt;, the real part &lt;span class="math"&gt;\(a\)&lt;/span&gt; gives to coordinate along the horizontal axis and the imaginary part &lt;span class="math"&gt;\(b\)&lt;/span&gt; gives the coordinate along the vertical axis.  Using the equations above, we can instead describe the complex number as a pair of numbers &lt;span class="math"&gt;\(r\)&lt;/span&gt; and &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; in a polar coordinate system.&lt;/p&gt;
+&lt;p&gt;From the formulas, we have that &lt;span class="math"&gt;\(r = \sqrt{a^2 + b^2}\)&lt;/span&gt;. We've already encountered this expression before - this number is the same as &lt;span class="math"&gt;\(\sqrt{z \bar{z}}\)&lt;/span&gt;, where &lt;span class="math"&gt;\(\bar{z} = a - bi\)&lt;/span&gt; is the complex conjugate of &lt;span class="math"&gt;\(z\)&lt;/span&gt;. We also used the symbol &lt;span class="math"&gt;\(|z|\)&lt;/span&gt; to denote this value.  In this context, the number &lt;span class="math"&gt;\(|z|\)&lt;/span&gt; is called the &lt;em&gt;modulus&lt;/em&gt; of the complex number &lt;span class="math"&gt;\(z\)&lt;/span&gt;. The value &lt;span class="math"&gt;\(\theta = \arctan(y/x)\)&lt;/span&gt; also has a special name in the context of complex numbers, and is called the &lt;em&gt;argument&lt;/em&gt; of &lt;span class="math"&gt;\(z\)&lt;/span&gt;, sometimes denoted by &lt;span class="math"&gt;\(\text{arg}(z)\)&lt;/span&gt;.  &lt;/p&gt;
+&lt;p&gt;We therefore now have two different ways to describe a complex number. The first method uses its real and imaginary part, which corresponds to the &lt;span class="math"&gt;\(z = a+bi\)&lt;/span&gt; description and Cartesian coordinates. The second method uses the modulus and argument, which correspond to magnitude and direction in polar coordinates.  Using the formula to convert polar coordinates to Cartesian coordinates, we can write
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+z = |z|(\cos \theta + i \sin \theta)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+to express complex numbers in their so-called &lt;em&gt;polar form&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Depending on the situation, one of these forms is usually a more convenient way to express complex numbers.  For example, we've already seen that adding complex numbers in the Cartesian coordinate expression is fairly straightforward.  If &lt;span class="math"&gt;\(z_1 = a_1 + b_1 i\)&lt;/span&gt; and &lt;span class="math"&gt;\(z_2 = a_2 + b_2 i\)&lt;/span&gt;, then
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+z_1 + z_2 = (a_1 + a_2) + (b_1 + b_2)i
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+It's not so easy to add complex numbers in polar form, however. If one were instead told only the modulus and argument of the complex numbers &lt;span class="math"&gt;\(z_1, z_2\)&lt;/span&gt;, then it's not immediately clear how to find the modulus and argument of the complex number &lt;span class="math"&gt;\(z_1 + z_2\)&lt;/span&gt;. The easiest way to find these values is usually to convert both &lt;span class="math"&gt;\(z_1\)&lt;/span&gt; and &lt;span class="math"&gt;\(z_2\)&lt;/span&gt; to their Cartesian coordinate expression, add them as above, and then convert back to polar form.  (This is probably familiar to anyone whose main exposure to vectors is high-school physics.  In that context, vectors are often given using magnitude and direction, and one of the easiest ways to add vectors in such a context is to find the &lt;span class="math"&gt;\(x\)&lt;/span&gt; and &lt;span class="math"&gt;\(y\)&lt;/span&gt; components of the vectors and add those separately. Finding the &lt;span class="math"&gt;\(x\)&lt;/span&gt; and &lt;span class="math"&gt;\(y\)&lt;/span&gt; components of a vector is exactly the same process as converting it from polar form to Cartesian form.)&lt;/p&gt;
+&lt;p&gt;On the other hand, we saw in &lt;a href="http://www.josephthurman.com/quaternions1.html"&gt;a previous post&lt;/a&gt; that the multiplication of complex numbers, written in Cartesian coordinates, isn't exactly intuitive.  The formula is that
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(a_1 + b_1 i)(a_2 + b_2 i) = (a_1 a_2 - b_1 b_2) + (a_1 b_2 + a_2 b_1) i,
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+which arises from treating &lt;span class="math"&gt;\(i\)&lt;/span&gt; as a variable and gathering like terms, using the simplification that &lt;span class="math"&gt;\(i^2 = -1\)&lt;/span&gt;.  This formula, though, will become much clearer when we consider the expression for the multiplication of complex numbers in polar form.&lt;/p&gt;
+&lt;h3&gt;Multiplication of Complex Numbers in Polar Form&lt;/h3&gt;
+&lt;p&gt;So how do we multiply complex numbers in polar form? If &lt;span class="math"&gt;\(z_1, z_2\)&lt;/span&gt; are complex numbers, with moduli &lt;span class="math"&gt;\(|z_1|, |z_2|\)&lt;/span&gt; and arguments &lt;span class="math"&gt;\(\theta_1, \theta_2\)&lt;/span&gt;, respectively, then their product is
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+z_1 z_2 &amp;amp;= |z_1|(\cos \theta_1  + i \sin \theta_1)|z_2|(\cos \theta_2  + i \sin \theta_2) \\
+  &amp;amp;= |z_1||z_2|\Big( \big((\cos \theta_1)(\cos \theta_2)- (\sin \theta_1)(\sin \theta_2)\big) + i\big((\cos \theta_1)(\sin \theta_2) + (\sin \theta_1)(\cos \theta_2)\big) \Big)
+\end{align*}&lt;/div&gt;
+&lt;p&gt;
+This expression looks complicated, but can be simplified with a little knowledge of trigonometry.  There are formulas that allow one to express the sine and cosine of the sum of two angles in terms of the sine and cosine of the angles being addded.  Specifically, the following formulas are true for any pair of angles &lt;span class="math"&gt;\(\theta_1, \theta_2\)&lt;/span&gt;:
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+\sin(\theta_1 + \theta_2) &amp;amp;= (\cos \theta_1)(\sin \theta_2) + (\sin \theta_1)(\cos \theta_2) \\
+\cos(\theta_1 + \theta_2) &amp;amp;= (\cos \theta_1)(\cos \theta_2)- (\sin \theta_1)(\sin \theta_2)
+\end{align*}&lt;/div&gt;
+&lt;p&gt;
+Of course, these are exactly the expressions appearing above, and so we can finally express our multiplication formula in polar form as
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+z_1 z_2 = |z_1| |z_2| \big(\cos(\theta_1 + \theta_2) + i \sin(\theta_1 + \theta_2)\big)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+This is the polar form for a complex number with modulus &lt;span class="math"&gt;\(|z_1| |z_2| = |z_1 z_2|\)&lt;/span&gt; and argument &lt;span class="math"&gt;\(\theta_1 + \theta_2\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;If you don't remember the various trigonometry identities, then understanding the derivation of the formula we gave above isn't really that important. What is important is that this formula finally gives a way to interpret the multiplication of complex numbers geometrically. We see that to multiply two complex numbers &lt;span class="math"&gt;\(z_1\)&lt;/span&gt; and &lt;span class="math"&gt;\(z_2\)&lt;/span&gt; in polar form, we multiply their respective moduli and add their arguments.  This means that multiplication of complex numbers corresponds geometrically to &lt;em&gt;stretching&lt;/em&gt; and &lt;em&gt;rotating&lt;/em&gt; vectors in the the plane.  &lt;/p&gt;
+&lt;p&gt;Let's illustrate this with a simple example. Let &lt;span class="math"&gt;\(z = \sqrt{3}
+ - i\)&lt;/span&gt;, and let &lt;span class="math"&gt;\(w = -2 + 2 \sqrt{3}i\)&lt;/span&gt;.  These are expressed in Cartesian form now, but using the formulas above one can show that in polar form
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{align*}
+z &amp;amp;= 2 \left(\cos(-30^\circ) + i \sin(-30^\circ) \right)\\
+w &amp;amp;= 4 \left( \cos(120^\circ) + i \sin(120^\circ) \right)
+\end{align*}&lt;/div&gt;
+&lt;p&gt;
+that is, &lt;span class="math"&gt;\(z\)&lt;/span&gt; has modulus &lt;span class="math"&gt;\(|z| = 2\)&lt;/span&gt; and argument &lt;span class="math"&gt;\(-30^\circ\)&lt;/span&gt;, and &lt;span class="math"&gt;\(w\)&lt;/span&gt; has modulus &lt;span class="math"&gt;\(|w| = 4\)&lt;/span&gt; and argument &lt;span class="math"&gt;\(120^\circ\)&lt;/span&gt;.  The product &lt;span class="math"&gt;\(zw\)&lt;/span&gt; therefore has modulus &lt;span class="math"&gt;\(|zw| = 2 \cdot 4 = 8\)&lt;/span&gt; and argument &lt;span class="math"&gt;\(120 - 30 = 90^\circ\)&lt;/span&gt;, and so can be expressed in polar form as
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+zw = 8 \left( \cos(90^\circ) + i \sin(90^\circ) \right)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+Expressed in Cartesian coordinates, this is
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+zw = 8i
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+which could also be obtained by multiplying the expressions for &lt;span class="math"&gt;\(z\)&lt;/span&gt; and &lt;span class="math"&gt;\(w\)&lt;/span&gt; in Cartesian coordinates.&lt;/p&gt;
+&lt;p&gt;The geometrical interpretation is clearer when we plot &lt;span class="math"&gt;\(z\)&lt;/span&gt;, &lt;span class="math"&gt;\(w\)&lt;/span&gt;, and their product &lt;span class="math"&gt;\(zw\)&lt;/span&gt; as vectors in the plane:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Geometrical interpretation of complex multiplication " src="http://www.josephthurman.com/vectormultiplication1.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Vector representation of &lt;span class="math"&gt;\(z\)&lt;/span&gt;, &lt;span class="math"&gt;\(w\)&lt;/span&gt; and &lt;span class="math"&gt;\(zw\)&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Note in the image above that the length of &lt;span class="math"&gt;\(zw\)&lt;/span&gt; is 4 times the length of &lt;span class="math"&gt;\(z\)&lt;/span&gt;, and twice the length of &lt;span class="math"&gt;\(w\)&lt;/span&gt;.  The angles are a little harder to judge in this picture, but they match up as well - the angle between the &lt;span class="math"&gt;\(zw\)&lt;/span&gt; and the positive &lt;span class="math"&gt;\(x\)&lt;/span&gt;-axis is the sum the the angles that the vectors &lt;span class="math"&gt;\(z\)&lt;/span&gt; and &lt;span class="math"&gt;\(w\)&lt;/span&gt; make with that axis (the former angle being negative).  &lt;/p&gt;
+&lt;p&gt;It's also helpful to think of multiplication as a transformation that one vector is performing on the other.  For example, we could consider the product &lt;span class="math"&gt;\(zw\)&lt;/span&gt; as taking the vector &lt;span class="math"&gt;\(z\)&lt;/span&gt; and transforming it by the action represented by the complex number &lt;span class="math"&gt;\(w\)&lt;/span&gt;.  That is, as &lt;span class="math"&gt;\(w\)&lt;/span&gt; has a modulus of &lt;span class="math"&gt;\(4\)&lt;/span&gt; and an argument of &lt;span class="math"&gt;\(120^\circ\)&lt;/span&gt;, it represents a transformation that consists of stretching any other vector to 4 times its length, then rotating it counterclockwise by &lt;span class="math"&gt;\(120^\circ\)&lt;/span&gt;.  This is illustrated in the left picture below. This picture is the same as the picture above, but we mark the angles explicitly.  Notice that the dashed red angle, which is the angle that we rotate &lt;span class="math"&gt;\(z\)&lt;/span&gt; by to obtain the direction of &lt;span class="math"&gt;\(zw\)&lt;/span&gt;, is the same as the blue angle, the argument of &lt;span class="math"&gt;\(w\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Complex Multiplication as Rotation and Stretching " src="http://www.josephthurman.com/vectormultiplication2.png"&gt;
+&lt;em&gt;Complex multiplication as a transformation of the plane&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Of course, we could just as well consider the product &lt;span class="math"&gt;\(zw\)&lt;/span&gt; as changing the vector &lt;span class="math"&gt;\(w\)&lt;/span&gt; by the transformation represented by &lt;span class="math"&gt;\(z\)&lt;/span&gt;.  As the modulus of &lt;span class="math"&gt;\(z\)&lt;/span&gt; is 2 and its argument is &lt;span class="math"&gt;\(-30^\circ\)&lt;/span&gt;, this transformation consists of stretching by 2 and then rotating clockwise by &lt;span class="math"&gt;\(30^\circ\)&lt;/span&gt;.  This is illustrated in the right picture above, where we see that the blue dashed angle that we must rotate &lt;span class="math"&gt;\(w\)&lt;/span&gt; by to obtain the direction of &lt;span class="math"&gt;\(zw\)&lt;/span&gt; has the same measure as the red angle, the argument of &lt;span class="math"&gt;\(z\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;It's worth it to use this interpretation of complex numbers as transformations of the plane to think about the complex number &lt;span class="math"&gt;\(i\)&lt;/span&gt; again.  Under this interpretation, the complex number &lt;span class="math"&gt;\(i\)&lt;/span&gt; corresponds to rotating the plane counterclockwise by &lt;span class="math"&gt;\(90^\circ\)&lt;/span&gt;. This means that the number &lt;span class="math"&gt;\(i^2\)&lt;/span&gt; corresponds to rotation by &lt;span class="math"&gt;\(90^\circ\)&lt;/span&gt;, followed by rotation by &lt;span class="math"&gt;\(90^\circ\)&lt;/span&gt;, that is, rotation by &lt;span class="math"&gt;\(180^\circ\)&lt;/span&gt;. Of course, if you take the real axis and rotate it &lt;span class="math"&gt;\(180^\circ\)&lt;/span&gt;, the effect will be that every number will move to its opposite , e.g., 2 will move to &lt;span class="math"&gt;\(-2\)&lt;/span&gt; and &lt;span class="math"&gt;\(-4\)&lt;/span&gt; will move to 4. This transformation is the same as multiplying every real number by &lt;span class="math"&gt;\(-1\)&lt;/span&gt;. Therefore the algebraic expression &lt;span class="math"&gt;\(i^2 = -1\)&lt;/span&gt;, which before maybe seemed a little strange (how can the square of something be negative?) makes sense when considered geometrically.&lt;/p&gt;
+&lt;h3&gt;Euler's Formula&lt;/h3&gt;
+&lt;p&gt;This post is already a little long, and we've already explained the most important point for our future work, but it would be mathematical malpractice for me to discuss the multiplication of complex numbers without discussing "Euler's identity," which is considered by many to be one of the most beautiful equations in all of mathematics. Euler's identity is
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+e^{i \pi} + 1 = 0.
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+This equation is famous for giving a simple relationship between 5 of the most important numbers in mathematics: Euler's number &lt;span class="math"&gt;\(e\)&lt;/span&gt;, the circle constant &lt;span class="math"&gt;\(\pi\)&lt;/span&gt;, the imaginary unit &lt;span class="math"&gt;\(i\)&lt;/span&gt;, the additive identity &lt;span class="math"&gt;\(0\)&lt;/span&gt;, and the multiplicative identity &lt;span class="math"&gt;\(1\)&lt;/span&gt;. (The equation could be more succinctly written as &lt;span class="math"&gt;\(e^{i \pi } = -1\)&lt;/span&gt;, but we cheat a little bit to be able to consider &lt;span class="math"&gt;\(0\)&lt;/span&gt; and &lt;span class="math"&gt;\(1\)&lt;/span&gt;.)&lt;/p&gt;
+&lt;p&gt;This identity is actually a special case of a more general formula called Euler's formula.  Given a real number &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;, which we interpret as an angle measured in radians, we have that
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+e^{i \theta} = \cos \theta + i \sin \theta
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+If we use this formula with the specific value of &lt;span class="math"&gt;\(\theta = \pi\)&lt;/span&gt;, we obtain the special identity above.&lt;/p&gt;
+&lt;p&gt;Right now, we basically have to take this formula as a definition of what &lt;span class="math"&gt;\(e^{i\theta}\)&lt;/span&gt; means, so that &lt;span class="math"&gt;\(e^{i\theta}\)&lt;/span&gt; is a different way to write the complex number with modulus 1 and argument &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;.  Using the interpretation we developed in the previous section, this means that &lt;span class="math"&gt;\(e^{i\theta}\)&lt;/span&gt; is another way to represent the transformation of counterclockwise rotation by an angle of &lt;span class="math"&gt;\(\theta\)&lt;/span&gt;.  This formula also gives us another way to write complex numbers in polar form - a complex number with modulus &lt;span class="math"&gt;\(r\)&lt;/span&gt; and argument &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; is can be written succinctly as &lt;span class="math"&gt;\(z = re^{i\theta}\)&lt;/span&gt;.  In this notation, the process of multiplication of complex numbers matches with the rules of multiplying expressions with exponents
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(r_1 e^{i\theta_1})(r_2 e^{i\theta_2}) = r_1 r_2 e^{i(\theta_1 + \theta_2)}
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;Described in this way, this formula perhaps doesn't seem very special - it's basically just a notational convenience.  Truly understanding why this formula is correct and interesting requires calculus, and we won't get into that in this post.  But as a first step down that path, the reader who remembers what a &lt;a href="https://en.wikipedia.org/wiki/Taylor_series#List_of_Maclaurin_series_of_some_common_functions"&gt;Maclaurin series expansion&lt;/a&gt; is encouraged to consider the Maclaurin series for &lt;span class="math"&gt;\(e^{x}\)&lt;/span&gt; with &lt;span class="math"&gt;\(x\)&lt;/span&gt; replaced with &lt;span class="math"&gt;\(i \theta\)&lt;/span&gt; and compare the resulting expression to the Maclaurin series for &lt;span class="math"&gt;\(\cos\theta, \sin\theta\)&lt;/span&gt;.&lt;/p&gt;
+&lt;h3&gt;Summary, and on to the Quaternions&lt;/h3&gt;
+&lt;p&gt;This post marks the end of our consideration of complex numbers, at least for now.  It's therefore helpful to summarize what we've discussed so far:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complex numbers are numbers of the form &lt;span class="math"&gt;\(a +bi\)&lt;/span&gt;, where &lt;span class="math"&gt;\(i^2 = -1\)&lt;/span&gt;.  Algebraically, they are interesting because they allow us to solve polynomial equations that don't have any real number solutions, like &lt;span class="math"&gt;\(x^2 + 1 = 0\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;Geometrically, complex numbers can be visualized as points or vectors in the two-dimensional plane, with their real part &lt;span class="math"&gt;\(a\)&lt;/span&gt; plotted along the horizontal axis and their imaginary part &lt;span class="math"&gt;\(b\)&lt;/span&gt; plotted along the vertical axis.  They can also be described using polar coordinates, in which case the distance from the origin is called the modulus and the angle with the positive real axis is called the argument.&lt;/li&gt;
+&lt;li&gt;Complex addition, when interpreted geometrically, is vector addition. Translate one vector to the tip of the other, and the sum vector is obtained by drawing an arrow from the base of the second to the tip of the first.&lt;/li&gt;
+&lt;li&gt;Complex multiplication, interpreted geometrically, is a transformation that consists of taking the vector associated to one of the complex numbers and then stretching and rotating it using the modulus and argument of the other complex number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So what's next? Complex numbers give a compact way to describe geometric transformations in two dimensions, which leads to the question: what about three dimensions? Is there a way to define a multiplication operation of three-dimensional objects or vectors that has a natural geometrical interpretation? Can rotations in three dimensions be described neatly in such a way? The answer is yes, and this is done using the quaternions we've already discussed.  In the next series of posts, we'll begin to understand more about vector geometry in three dimensions and how quaternions can be used to describe this geometry.  &lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="thesis"></category><category term="quaternions"></category><category term="complex numbers"></category></entry><entry><title>Implementing the Binomial Option Pricing Model</title><link href="http://www.josephthurman.com/binomial3.html" rel="alternate"></link><published>2018-03-15T14:00:00-04:00</published><updated>2018-03-15T14:00:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-03-15:/binomial3.html</id><summary type="html">&lt;p&gt;In the &lt;a href="http://www.josephthurman.com/binomial1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/binomial2.html"&gt;posts&lt;/a&gt; in this series, we've described a model for stock price movements that can be used to find prices of simple European call and put options.  The model works by dividing the life of the option into some number of discrete intervals, and assuming that the stock …&lt;/p&gt;</summary><content type="html">&lt;p&gt;In the &lt;a href="http://www.josephthurman.com/binomial1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/binomial2.html"&gt;posts&lt;/a&gt; in this series, we've described a model for stock price movements that can be used to find prices of simple European call and put options.  The model works by dividing the life of the option into some number of discrete intervals, and assuming that the stock price randomly moves either up or down by a fixed percentage over each short interval.  This gives a tree of possible prices for the stock, and the option's value at each node in this tree can be computed as a discounted expected value of the future value of the option at later nodes in the tree, where the expected value is computed using risk-neutral probability and the discount factor is determined by the risk-free interest rate.  &lt;/p&gt;
 &lt;p&gt;In those previous posts, we computed prices given by this model in very simple cases, with only one or two steps. For the model to be effective, a larger number of steps will be required, and so it will no longer be feasible to compute by hand as we've done before.  In this post, we'll see how to implement the model in Python, consider a better way for choosing the parameters &lt;span class="math"&gt;\(u\)&lt;/span&gt; and &lt;span class="math"&gt;\(d\)&lt;/span&gt; in the model, and then discuss the rate of convergence of the algorithm&lt;/p&gt;
 &lt;h3&gt;The First Implementation&lt;/h3&gt;
 &lt;p&gt;We begin by giving a first, direct implementation of the model to compute the price of a call option.&lt;/p&gt;
