@@ -1,0 +1,467 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/friendly.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="This post will be the last post, at least for the time being, in the series discussing the binomial model for pricing options. In the previous post we implemented this model in Python in order to find prices for basic European call options. In this post, we&#39;ll expand the implementation …" />
+<meta name="keywords" content="finance, binomial-model, python">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="Expanding the Binomial Option Pricing Model"/>
+<meta property="og:description" content="This post will be the last post, at least for the time being, in the series discussing the binomial model for pricing options. In the previous post we implemented this model in Python in order to find prices for basic European call options. In this post, we&#39;ll expand the implementation …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/binomial4.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-03-29 12:00:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Finance"/>
+<meta property="article:tag" content="finance"/>
+<meta property="article:tag" content="binomial-model"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; Expanding the Binomial Option Pricing Model</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="binomial4">Expanding the Binomial Option Pricing Model</h1>
+    <p>
+          Posted on Thu 29 March 2018 in <a href="http://www.josephthurman.com/category/finance.html">Finance</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>This post will be the last post, at least for the time being, in the series discussing the <a href="http://www.josephthurman.com/tag/binomial-model.html">binomial model</a> for pricing options. In the <a href="http://www.josephthurman.com/binomial3.html">previous post</a> we implemented this model in Python in order to find prices for basic European call options.  In this post, we'll expand the implementation so that it can be used to price a wider variety of options, including American options.</p>
+<h3>Pricing European Put Options</h3>
+<p>To begin, let's take a second look at the implementation we found in the previous post to price call options.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">binomial_call</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="n">N</span>
+    <span class="n">u</span> <span class="o">=</span>  <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">vol</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">u</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[(</span><span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span> <span class="o">-</span> <span class="n">N</span><span class="p">))</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">C</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>How would we need to change this function to price a put option instead? Recall that a call option gives the right to buy the underlying stock for a particular price, while a put option gives the right to sell for a particular price. The only real difference between the two is the payoff function. If either type of option has a strike price of <span class="math">\(K\)</span>, and if we use <span class="math">\(S_T\)</span> to denote the spot price of the stock at expiration, then the call option is worth
+</p>
+<div class="math">\begin{equation*}
+C = \max(S_T-K,0)
+\end{equation*}</div>
+<p>
+at expiration, since the option allows one to purchase the stock for <span class="math">\(K\)</span> and immediately resell in the market for <span class="math">\(S_T\)</span> for a profit of <span class="math">\(S_T-K\)</span>, and one would only exercise this option if <span class="math">\(S_T-K &gt; 0\)</span>.  Similarly, the payoff of a put option is
+</p>
+<div class="math">\begin{equation*}
+P = \max(K-S_T,0)
+\end{equation*}</div>
+<p>
+since, if one held the option, they could purchase the stock for <span class="math">\(S_T\)</span> in the market and resell for <span class="math">\(K\)</span> using the option for a profit of <span class="math">\(K-S_T\)</span>, and again this option is only exercised if <span class="math">\(K-S_T &gt; 0\)</span>.  To modify the code above to price a put option, we only need to change the part where we compute the value of the option at expiry to use this other payoff function. The resulting function is below.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">binomial_put</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="n">N</span>
+    <span class="n">u</span> <span class="o">=</span>  <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">vol</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">u</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">C</span><span class="p">[(</span><span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span> <span class="o">-</span> <span class="n">N</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">#New payoff function for put options</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">C</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>The above code works perfectly well, but what if we had a third type of options trade with a third payoff? For example, we could consider an options trading strategy called a <a href="https://en.wikipedia.org/wiki/Straddle">straddle</a>.  Such a trade consists of buying both a call option and a put option on a stock, with the strike price for both equal to the price of the stock today.  What is such a trade good for? If a trader owns a straddle and the price of the stock goes up, then they can exercise the call option and receive the change in price.  On the other had, if the price goes down, they can exercise the put option instead.  This isn't actually a free money machine like it sounds - the trader has to pay some amount to purchase the straddle, and so they'll only make a profit if the change in the price of the stock is greater than the price they paid for the straddle.  Therefore a trader who buys a straddle is betting that the stock will make a large change in its value over the life of the option, but can't decide whether that change will be an increase or decrease.</p>
+<p>How could one find the price of a straddle?  Well, a straddle consists of a call and a put, so one method to price a straddle would be to use the above functions to find the price of the call and put separately and simply add them together. A second option, though, is to consider the payoff function of the straddle.  It's not hard to see that the payoff is simply
+</p>
+<div class="math">\begin{equation*}
+\text{Straddle} = |S_T - K|
+\end{equation*}</div>
+<p>
+where <span class="math">\(K\)</span> is the strike price on the two options, assumed to be the value of the stock today.  We could therefore write a third function to price straddles, modifying the function in the final payoff step to be the payoff function for straddles. This method will give the same price as the one we'd get by pricing the put and call options in the straddle separately, but will run roughly twice as fast since it will require constructing only one binomial pricing tree instead of two.</p>
+<p>Of course, a straddle is but one example of any number of possible options strategies that can consist of long and short positions in multiple options with varying types and strike prices. Many of these have fun names like a <a href="https://en.wikipedia.org/wiki/Strangle_%28options%29">strangle</a>, an <a href="https://en.wikipedia.org/wiki/Iron_condor">iron condor</a>, or, most bizarrely, the <a href="https://en.wikipedia.org/wiki/Jade_Lizard">jade lizard</a>. Since all of these strategies are combinations of simpler call and put options, we could price them by finding the price of all of the components and taking the sum. This is more computationally expensive than it needs to be, though, especially for complicated strategies that could involve many options. The easier pricing method is to observe that each of these strategies also has a single function that determines the payoff of the option from the spot price of the asset at expiration. (It's the sum of the payoff functions of all of the options involved in the strategy.) Instead of writing tens or even hundreds of different functions for all the various different type of options trades, we'll instead modify the function we've defined above so that we can easily change the payoff associated to the option.</p>
+<p>The resulting function is defined below.  We also give some functions to produce the payoff function of a call, put, and straddle.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">binomial_model</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="n">payoff</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    payoff is a function that describes the payoff of the option,</span>
+<span class="sd">        at expiry, as a function of the value of the underlying</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">T</span><span class="o">/</span><span class="n">N</span>
+    <span class="n">u</span> <span class="o">=</span>  <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">vol</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">u</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[(</span><span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="n">payoff</span><span class="p">(</span><span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span> <span class="o">-</span> <span class="n">N</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">C</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">call_payoff_with_strike</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">S</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">S</span><span class="o">-</span><span class="n">K</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">put_payoff_with_strike</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">S</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">K</span><span class="o">-</span><span class="n">S</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">straddle_payoff_with_strike</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">S</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">S</span><span class="o">-</span><span class="n">K</span><span class="p">)</span>
+</pre></div>
+
+
+<p>As a simple check, note that our new method to price a call gives the same answer as our old function for pricing the same option. (The various parameters below were chosen arbitrarilty.)</p>
+<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">binomial_call</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">binomial_model</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">call_payoff_with_strike</span><span class="p">(</span><span class="mi">115</span><span class="p">),</span> <span class="mi">500</span><span class="p">))</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>0.42805363986800904
+0.42805363986800904
+</pre></div>
+
+
+<p>Our new functions are also consistent, in that the price of a straddle is the sum of the call and put prices.</p>
+<div class="highlight"><pre><span></span><span class="n">call</span> <span class="o">=</span> <span class="n">binomial_model</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">call_payoff_with_strike</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">put</span> <span class="o">=</span> <span class="n">binomial_model</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">put_payoff_with_strike</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">straddle</span> <span class="o">=</span> <span class="n">binomial_model</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">straddle_payoff_with_strike</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">500</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">call</span> <span class="o">+</span> <span class="n">put</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">straddle</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>7.962206120543319
+7.9622061205433186
+</pre></div>
+
+
+<p>The above code suggests that it may be clarifying to rewrite our code using an object-oriented approach - instead of taking the payoff function itself as an argument in our function, we could define an <code>Option</code> class that would include a method to compute the payoff of the option.  Before we begin making those larger changes, though, we'll also consider what changes we need to make to our implementation to be able to price American options.  </p>
+<h3>Pricing American Options</h3>
+<p>Recall that while European options can only be exercised on one particular day, American options can be exercised at any time before they expire. Since American options give their holders more rights than European options, American options should be worth at least as much as their European counterparts. But how much more: how much is the ability to exercise the option early worth?</p>
+<p>This is related to what is called the <em>intrinsic value</em> of an option, which is defined to be the value the option would have if it were exercised now, regardless of whether or not we're actually able to exercise the option at this time. For example, if you own a European call option on a stock with strike price &dollar;100 that expires in 3 months, and the stock price right now is &dollar;105, then the intrinsic value of the option today is &dollar;5, even though the option can't actually be exercised right now.  </p>
+<p>It is important to note that the intrinsic value of the option is <em>not</em> the same as the price of the option today - for example, in the situation we just described, if we us the same values for the risk-free rate and volatility that we've assumed in our examples above then the price of the option given by the model (using <span class="math">\(N = 500\)</span> steps) is</p>
+<div class="highlight"><pre><span></span><span class="n">binomial_model</span><span class="p">(</span><span class="mi">105</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">call_payoff_with_strike</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>7.318672372367908
+</pre></div>
+
+
+<p>Note that this value is actually higher than the intrinsic value of &dollar;5 - we'll discuss this point more later.  </p>
+<p>For a European call option, the idea of intrinsic value doesn't make a big difference in the actual pricing, since these options can only be exercised at a specific time.  An American option, though, can always be exercised to gain the intrinsic value. To find the value of an American option at any particular time, we need to consider both the expected future value of the option (as we have done for European options) and the intrinsic value. The actual value of the option at that time is then the <em>larger</em> of these two values.</p>
+<p>We can easily modify our earlier code to accommodate this change.  In the main loop where we work backward through the tree, we have already calculated the theoretical future value of the option.  We can simply add an extra line of code to compute the intrinsic value of the option, and then take the maximum to find the value of the option at each node. Of course, we only want to make this change for pricing American options, and so this aspect of the calculation needs to be something controlled by the <code>Option</code> class in the object-oriented approach we're about to implement.</p>
+<h3>An Object-Oriented Implementation</h3>
+<p>Our model has three components that are fairly distinct, namely a stock, an option on that stock, and a binomial model to find the price of that option. Each of these concepts will have its own corresponding class. The simplest class is the one that will describe a stock.  In our model, the stock really has only two values associated to it - today's spot price and the stock's volatility - and so the definition of this class is very simple.</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Stock</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">,</span> <span class="n">vol</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spot</span> <span class="o">=</span> <span class="n">spot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vol</span> <span class="o">=</span> <span class="n">vol</span>
+</pre></div>
+
+
+<p>With such little information, we don't actually need the overhead of defining this stock class, but it's worth it to separate the stock from the concept of an option since options can be written on many underlying assets.</p>
+<p>As far as the option is concerned, we have a few pieces of information that define the option itself - the underlying asset, the expiration date of the option, and the payouts associated to the option.  To consider the distinction between American and European options, we describe the payout of the option using two different functions, one that gives the final value at expiration and another function for the payout associated to early exercise. A base class from which our other option types will inherit is defined below.</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Option</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">underlying</span><span class="p">,</span> <span class="n">expiry</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">underlying</span> <span class="o">=</span> <span class="n">underlying</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expiry</span> <span class="o">=</span> <span class="n">expiry</span>
+
+    <span class="k">def</span> <span class="nf">final_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Final option payoff is not defined&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">early_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Early exercise payoff is not defined&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>We can then implement subclasses that give the specific behavior of American and European call and put options.  These options have an extra parameter associated to them, the strike price of the option.  For European call options, the <code>final_payoff</code> function is the same as what we've used before, and the <code>early_payoff</code> function just returns 0 since the option cannot be exercised early.</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EuroCall</span><span class="p">(</span><span class="n">Option</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">underlying</span><span class="p">,</span> <span class="n">expiry</span><span class="p">,</span> <span class="n">strike</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">underlying</span><span class="p">,</span> <span class="n">expiry</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strike</span> <span class="o">=</span> <span class="n">strike</span>
+
+    <span class="k">def</span> <span class="nf">final_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">spot</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">strike</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">early_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">class</span> <span class="nc">EuroPut</span><span class="p">(</span><span class="n">Option</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">underlying</span><span class="p">,</span> <span class="n">expiry</span><span class="p">,</span> <span class="n">strike</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">underlying</span><span class="p">,</span> <span class="n">expiry</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strike</span> <span class="o">=</span> <span class="n">strike</span>
+
+    <span class="k">def</span> <span class="nf">final_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strike</span> <span class="o">-</span> <span class="n">spot</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">early_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+
+
+<p>We can also define classes to represent American options.  These are just like European options, except the <code>early_payoff</code> function is the same as the <code>final_payoff</code> function.  </p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AmerCall</span><span class="p">(</span><span class="n">EuroCall</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">early_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_payoff</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">AmerPut</span><span class="p">(</span><span class="n">EuroPut</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">early_payoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">final_payoff</span><span class="p">(</span><span class="n">spot</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This framework is flexible enough to allow for many other types of options beyond combinations of calls and puts. For example, instead of American options, where the <code>final_payoff</code> and <code>early_payoff</code> functions are the same, we could consider options that have an entirely different payoff if exercised early, perhaps with a some kind of early-exercise penalty. We could also easily add a time parameter to the <code>early_payoff</code> function, and consider more complicated options that could, for example, only be exercised on certain days, or have different strike prices over the life of the option.</p>
+<p>Finally, we define a class that contains the actual binomial pricing method.  This class takes in the option and the risk-free rate as an input, and then includes a method that runs the binomial model for a given number of steps to find its price. Since our model will now need to take into account the possible intermediate values of the stock price in order to price American options, we define an extra function to make that computation. Otherwise, the code is very similar to what we have had before, except some of the parameters are now considered as attributes of various objects instead of as function arguments.</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BinomialModel</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">option</span> <span class="o">=</span> <span class="n">option</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
+
+    <span class="k">def</span> <span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">expiry</span><span class="o">/</span><span class="n">N</span>
+        <span class="n">u</span> <span class="o">=</span>  <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">underlying</span><span class="o">.</span><span class="n">vol</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">u</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span>
+
+        <span class="c1"># Computes the price of the underlying asset k steps into the tree with m up movements</span>
+        <span class="k">def</span> <span class="nf">S</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">m</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">underlying</span><span class="o">.</span><span class="n">spot</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="o">-</span><span class="n">k</span><span class="p">))</span>
+
+        <span class="n">C</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[(</span><span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">final_payoff</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">m</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">future_value</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">)])</span>
+                <span class="n">exercise_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">early_payoff</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">m</span><span class="p">))</span>
+                <span class="n">C</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">future_value</span><span class="p">,</span> <span class="n">exercise_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">C</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+
+
+<p>Just to make sure we haven't introduced any errors, we can check to make sure that our new code finds the same prices as before.  Consider the example we computed before:</p>
+<div class="highlight"><pre><span></span><span class="n">binomial_call</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>0.42805363986800904
+</pre></div>
+
+
+<p>Using our new code, which now requires a few more lines to write, we have</p>
+<div class="highlight"><pre><span></span><span class="n">test_stock</span> <span class="o">=</span> <span class="n">Stock</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">euro</span> <span class="o">=</span> <span class="n">EuroCall</span><span class="p">(</span><span class="n">test_stock</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mi">115</span><span class="p">)</span>
+<span class="n">BinomialModel</span><span class="p">(</span><span class="n">euro</span><span class="p">,</span><span class="mf">0.015</span><span class="p">)</span><span class="o">.</span><span class="n">price</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>0.42805363986800904
+</pre></div>
+
+
+<p>Thankfully, it appears we haven't broken anything in refactoring our code to make it object-oriented.</p>
+<h3>American vs. European Options</h3>
+<p>American options, as we've discussed above, are essentially European options along with the extra right to exercise early. It seems this extra right should be worth something, and that an American option should be worth more than its European counterpart. Is that actually the case?</p>
+<p>In particular, with can price an American call option with the same parameters as the European option we priced at the end of the last section:</p>
+<div class="highlight"><pre><span></span><span class="n">amer</span> <span class="o">=</span> <span class="n">AmerCall</span><span class="p">(</span><span class="n">test_stock</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mi">115</span><span class="p">)</span>
+<span class="n">BinomialModel</span><span class="p">(</span><span class="n">amer</span><span class="p">,</span><span class="mf">0.015</span><span class="p">)</span><span class="o">.</span><span class="n">price</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>0.42805363986800904
+</pre></div>
+
+
+<p>This price is the same as the price for the European option, and we just argued that the American option should be worth more.  Did we make a mistake in our model?</p>
+<p>It turns out that the early exercise rights of an American option do not necessarily have any value. Looking at our code, we see that the American option will only be worth more than the European option if there are times when the "exercise value" (which is also the intrinsic value of the option) is worth more than the expected future value of the option.  For American call options, this will never actually occur if the risk-free interest rate is positive. (This is actually only true for stocks that don't pay dividends, which are the only stocks we've been considering so far. If the stock pays a dividend during the life of the option, then it may be worth it to exercise the call option early so that one can hold the stock and receive the dividend payment.)</p>
+<p>To see this, consider a portfolio that consists of one share of the asset underlying the call option along with a obligation to pay <span class="math">\(K\)</span> dollars on the expiration date of the option (i.e., in order to repay a risk-free loan). Let <span class="math">\(S_t\)</span> denote the value of the stock at a given time, and <span class="math">\(Z_t\)</span> denote the value of the loan. If interest rates are positive, we have that <span class="math">\(Z_t &lt; Z_T\)</span> for all <span class="math">\(t &lt; T\)</span>. Let <span class="math">\(C_t\)</span> denote the value of the option at time <span class="math">\(t\)</span>, and let <span class="math">\(T\)</span> denote the expiration time of the option.  </p>
+<p>At expiration, we have that <span class="math">\(Z_T = K\)</span> and so the value of the portfolio is <span class="math">\(S_T-Z_T = S_T - K \leq \max(S_T-K,0) = C_T\)</span>. Therefore by no-arbitrage principles we have that <span class="math">\(S_t - Z_t \leq C_t\)</span> for all earlier times. Since interest rates are positive, we have <span class="math">\(S_t-Z_t &gt; S_t-K\)</span>, and so combining these inequalities gives that
+</p>
+<div class="math">\begin{equation*}
+S_t - K &lt; S_t - Z_t \leq C_t
+\end{equation*}</div>
+<p>
+that is, the value of a call option at a particular time is always greater than the intrinsic value of the option. In particular, an investor is never better off by exercising an American call option early, and so the extra rights of an American call option are worthless.  If an investor holds the option and wanted to cash out, it would always be better for them to sell the option than to exercise it. Note that our argument was based on no-arbitrage principles, and therefore doesn't rely on any of the special assumptions about price movement of the underlying asset in our particular binomial model.</p>
+<p>American put options really are different from European puts, though. There are times when it is better to exercise an American put option early, and so American put options can be worth strictly more than their European counterparts.  For example, sticking with the same stock and option parameters we've been considering, but pricing put options instead, gives</p>
+<div class="highlight"><pre><span></span><span class="n">amerp</span> <span class="o">=</span> <span class="n">AmerPut</span><span class="p">(</span><span class="n">test_stock</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mi">115</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">BinomialModel</span><span class="p">(</span><span class="n">amerp</span><span class="p">,</span><span class="mf">0.015</span><span class="p">)</span><span class="o">.</span><span class="n">price</span><span class="p">())</span>
+<span class="n">europ</span> <span class="o">=</span> <span class="n">EuroPut</span><span class="p">(</span><span class="n">test_stock</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mi">115</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">BinomialModel</span><span class="p">(</span><span class="n">europ</span><span class="p">,</span><span class="mf">0.015</span><span class="p">)</span><span class="o">.</span><span class="n">price</span><span class="p">())</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>15.183131872004736
+14.997611223826567
+</pre></div>
+
+
+<p>Note that the American option is in fact worth more. One possible way we could improve our code would be to add a method to the <code>BinomialModel</code> class that could find the nodes in the tree that correspond to situations in which early exercise of the option is preferred.</p>
+<h3>Conclusion</h3>
+<p>And that's it! It's taken a fair amount of work, but we've managed to build a fairly efficient model for pricing a number of different types of options on simple stocks. Even better, we did this without any hardcore mathematics - our model uses nothing more complicated than basic probability, and all of the hard work is done by a computer in simulation.</p>
+<p>Of course, there are still plenty of ways that our model could be improved. For example, we've taken the volatility of the underlying stock as a given, but where does this number actually come from?  We've also ignored dividends that might be paid on the stock, transaction costs, and tax considerations. But the underlying theory of the model, and our specific implementation of it in Python, is flexible enough that we could continue to make modifications to address these concerns. If you'd like to do that, you can check out a consolidated and lightly-commented version of the final implementation on my <a href="https://github.com/josephthurman/blog-projects">Github page</a>.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/finance.html">finance</a>
+      <a href="http://www.josephthurman.com/tag/binomial-model.html">binomial-model</a>
+      <a href="http://www.josephthurman.com/tag/python.html">python</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
