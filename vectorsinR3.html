@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/friendly.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="The previous posts in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers. The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane. As mentioned in an earlier post, this …" />
+<meta name="keywords" content="thesis, quaternions, linear algebra">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="Geometry of Three-Dimensional Vectors"/>
+<meta property="og:description" content="The previous posts in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers. The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane. As mentioned in an earlier post, this …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/vectorsinR3.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-04-30 12:01:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Thesis"/>
+<meta property="article:tag" content="thesis"/>
+<meta property="article:tag" content="quaternions"/>
+<meta property="article:tag" content="linear algebra"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; Geometry of Three-Dimensional Vectors</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+          <li><a href="http://www.josephthurman.com/./contact/">contact</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/josephthurman/blog-projects" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="vectorsinR3">Geometry of Three-Dimensional Vectors</h1>
+    <p>
+          Posted on Mon 30 April 2018 in <a href="http://www.josephthurman.com/category/thesis.html">Thesis</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>The <a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html">previous</a> <a href="http://www.josephthurman.com/geometryofcomplexnumbers2.html">posts</a> in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers.  The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane.</p>
+<p>As mentioned in an <a href="http://www.josephthurman.com/quaternions2.html">earlier post</a>, this geometrical interpretation leads to a natural attempt at generalization. If the complex number system can be used to describe two-dimensional geometry, is there a similar number system that can describe three-dimensional geometry? As that post mentioned, that's not quite the case. Instead, one has to increase to four dimensions, where the desired number system is known as the quaternions. The quaternions can still be used to gain some insight into three-dimensional geometry, however.  In order to understand those connections, we'll take the next few posts to discuss the relevant geometry in three dimensions.</p>
+<h3>3-Dimensional Vectors</h3>
+<p>The real numbers, <span class="math">\(\mathbb{R}\)</span>, are one-dimensional, and so an element of the set of real numbers is given by a single number. A two-dimensional quantity is something that is represented by a pair of real numbers. For example, the complex numbers <span class="math">\(\mathbb{C}\)</span> are two dimensional, and we write a complex number <span class="math">\(z\)</span> as <span class="math">\(z = x + y i\)</span> for <span class="math">\(x, y\)</span> real numbers. An element of a three-dimensional space, then, can be represented by three real numbers, which we usually write as <span class="math">\((x,y,z)\)</span>.  The set of ordered triples of real numbers is referred to as <span class="math">\(\mathbb{R}^3\)</span>.</p>
+<p>More generally, we can consider the set <span class="math">\(\mathbb{R}^k\)</span> as the set of ordered <span class="math">\(k\)</span>-tuples of real numbers. For small values of <span class="math">\(k\)</span>, we have that <span class="math">\(\mathbb{R}, \mathbb{R}^2,\)</span> and <span class="math">\(\mathbb{R}^3\)</span> correspond to the familiar notion of a line, a plane, and a space.  Larger values of <span class="math">\(k\)</span> are much more difficult to visualize.</p>
+<p>In the case of the plane, when <span class="math">\(k = 2\)</span>, we've also earlier considered the complex numbers <span class="math">\(\mathbb{C}\)</span> as a plane, and we've seen that we can consider a complex number <span class="math">\(z = x + yi\)</span> as the ordered pair <span class="math">\((x,y)\)</span>. This means that <span class="math">\(\mathbb{C}\)</span> and <span class="math">\(\mathbb{R}^2\)</span> actually represent the same set. Why do we use two different symbols for the same set? When we write <span class="math">\(\mathbb{R}^2\)</span>, we're just considering the set of ordered pairs of numbers, which doesn't have a natural multiplication operation like the complex numbers do.  We therefore need to use a separate symbol, <span class="math">\(\mathbb{C}\)</span>, when we want to consider pairs of real numbers as complex numbers that have an additional multiplication operation.</p>
+<p>This is common in mathematics - we can often give the same underlying object (the set of pairs of real numbers) additional layers of structure (a multiplication operation) to create something new.  In fact, the quaternions are another example of this type of construction. Using the definition above, an element of <span class="math">\(\mathbb{R}^4\)</span> is an ordered list <span class="math">\((x_1, x_2, x_3, x_4)\)</span> of 4 real numbers. A quaternion is also a list of four real numbers, <span class="math">\(q = x_1 + x_2 i + x_3 j + x_4 k\)</span>.  But the quaternions have an extra multiplication operation, and so we use the symbol <span class="math">\(\mathbb{R}^4\)</span> when we want to consider the set of ordered quadruplets of numbers, and the symbol <span class="math">\(\mathbb{H}\)</span> when we want to consider the set of ordered quadruplets of numbers <em>along with</em> the additional quaternionic multiplication operation.</p>
+<p>Considering three dimensions, the standard way of visualizing elements <span class="math">\((x,y,z)\)</span> in <span class="math">\(\mathbb{R}^3\)</span> is as points graphed on a plot with three axes. This is illustrated below, where we graph the points <span class="math">\((1,2,3)\)</span> and <span class="math">\((0,-2,-1)\)</span>.  Here we're using the standard conventions for drawing three-dimensional graphs on a flat 2-dimensional screen. The positive <span class="math">\(x\)</span>-axis is pointing down and to the left, which you should visualize as pointing out of the screen.  The positive <span class="math">\(y\)</span>-axis points to the right, and the positive <span class="math">\(z\)</span>-axis points up.</p>
+<p><img alt="Points plotted in 3D" src="http://www.josephthurman.com/pointsin3d.png"></p>
+<p><em>Points plotted in 3D</em></p>
+<h3>3-Dimensional Vector Addition</h3>
+<p>Points in three-dimensional space can also be considered as vectors, just as we did in two dimensions. Instead of considering the point <span class="math">\((x,y,z)\)</span> as just a point, we visualize it as an arrow starting at the origin <span class="math">\((0,0,0)\)</span> and pointing to the point <span class="math">\((x,y,z)\)</span>.  The is pictured below, where we consider the same points graphed above as vectors.</p>
+<p><img alt="Vectors plotted in 3D" src="http://www.josephthurman.com/vectorsin3d.png"></p>
+<p><em>Vectors plotted in 3D</em></p>
+<p>The vector addition operation we discussed in two dimensions also generalizes naturally to three-dimensions.  There's an intuitive way to add elements of <span class="math">\(\mathbb{R}^3\)</span>, by just adding the corresponding elements in the ordered triples:
+</p>
+<div class="math">\begin{equation*}
+(x_1, y_1, z_1) + (x_2, y_2, z_2) = (x_1 + x_2, y_1 + y_2, z_1 + z_2)
+\end{equation*}</div>
+<p>
+For the two points we've considered above, we have
+</p>
+<div class="math">\begin{equation*}
+(1,2,3) + (0,-2,-1) = (1,0,2)
+\end{equation*}</div>
+<p>This operation also has the same geometric meaning - if we consider the ordered triples as vectors, then addition corresponds to moving one arrow to begin at the end of the other, then drawing a new vector to the end of that arrow.  This is clearer in pictures, shown below.  The red vector is <span class="math">\((1,2,3)\)</span>, the blue vector is <span class="math">\((0,-2,-1)\)</span> and the sum <span class="math">\((1,0,2)\)</span> is shown in black. The translates of the vectors are also shown to demonstrate that the parallelogram rule similarly applies in 3-dimensions.</p>
+<p><img alt="Vector addition in 3D" src="http://www.josephthurman.com/vectoradditionin3d.png"></p>
+<p><em>Vector addition in 3D</em></p>
+<p>This addition operation generalizes naturally to all higher dimensions - we can always add two element of <span class="math">\(\mathbb{R}^k\)</span> by considering those elements as ordered <span class="math">\(k\)</span>-tuples of numbers and just adding the corresponding numbers.  (In four dimensions, this exactly gives the operation of addition of quaternions, but we'll discuss this more later.) This becomes difficult, if not impossible, to visualize in higher dimensions, though.  The set <span class="math">\(\mathbb{R}^k\)</span>, along with this vector addition operation, is the main example of a <em>vector space</em>, an extremely important concept in geometry that we'll discuss in more depth in a later post.</p>
+<p>We see that the set of <span class="math">\(\mathbb{R}^3\)</span> of triples of real numbers can be given an addition operation, and an inverse subtraction operation is also easy to define: we just subtract the corresponding elements in the triples.  Taking a different set of vectors to subtract, if we have the vectors <span class="math">\(v_1 = (-1,1,3)\)</span> and <span class="math">\(v_2 = (1,2,2)\)</span>, then the subtraction <span class="math">\(v_1 - v_2\)</span> results in the vector
+</p>
+<div class="math">\begin{equation*}
+(-1,1,3) - (1,2,2) = (-2,-1,1)
+\end{equation*}</div>
+<p>
+This also has an easy interpretation in terms of vectors - subtracting a vector is the same as adding a vector pointing in the opposite direction.  This is illustrated below:</p>
+<p><img alt="Vector subtraction in 3D" src="http://www.josephthurman.com/vectorsubtractionin3d.png"></p>
+<p><em>Vector subtraction in 3D</em></p>
+<p>In these images, the red vector is <span class="math">\(v_1\)</span>, the blue vector is <span class="math">\(v_2\)</span>, and the black vector corresponds to the subtraction <span class="math">\(v_1 - v_2\)</span>, which we'll call <span class="math">\(v_3\)</span>.  The green vector is the vector <span class="math">\(-v_2 = (-1,-2,-2)\)</span>, the vector with the same magnitude as <span class="math">\(v_2\)</span> but pointing in the opposite direction.  Note that the subtraction <span class="math">\(v_1 - v_2\)</span> is the same as the vector addition <span class="math">\(v_1 + (-v_2)\)</span>, as illustrated in the left figure.  </p>
+<p>The image on the right gives another way to interpret the subtraction.  We have that <span class="math">\(v_1 - v_2 = v_3\)</span>, which we can rearrange to say that <span class="math">\(v_1 = v_3 + v_2\)</span>, which is the vector addition shown on the right.  </p>
+<h3>What About Multiplication and Division?</h3>
+<p>Recall that all our work so far has been to try to understand number systems that have addition, subtraction, multiplication, and division operations. We've done half of that work in <span class="math">\(\mathbb{R}^3\)</span> by defining a way to add and subtract triples of real numbers, and this operation corresponds geometrically to vector addition and subtraction.  What happens when we try to define multiplication and division operations?</p>
+<p>As mentioned earlier, it turns out this is impossible - one has to increase to four dimensions and consider the quaternions in order to be able to define a higher-dimensional number system that has a valid multiplication and division operation.  Proving exactly why such an operation can't exist in three dimensions will have to wait for a later post, but in order to understand this impossibility it's worth it to try to see what happens when we attempt to make such a definition.</p>
+<p>In particular, we could try to make the most obvious definition for multiplication - what if we just multiply two triples by multiplying their corresponding entries? That is, we can define a multiplication operation by
+</p>
+<div class="math">\begin{equation*}
+(x_1, y_1, z_1) \cdot (x_2, y_2, z_2) = (x_1x_2, y_1y_2, z_1z_2)
+\end{equation*}</div>
+<p>This certainly defines some kind of operation, but the problem is that there is no way to define a corresponding inverse or division operation for this multiplication.  To see why, consider the multiplication below:
+</p>
+<div class="math">\begin{equation*}
+(1,0,1) \cdot (0,1,0) = (0,0,0)
+\end{equation*}</div>
+<p>
+Call the two vectors that we've defined <span class="math">\(v_1\)</span> and <span class="math">\(v_2\)</span>, and let <span class="math">\(\mathbf{0}\)</span> denote the vector that consists of all zeros, so that we can write the above in a shorter form as <span class="math">\(v_1 \cdot v_2 = \mathbf{0}\)</span>.  </p>
+<p>We'd like to define an inverse for <span class="math">\(v_2\)</span>, which we would denote by <span class="math">\(v_2^{-1}\)</span>, such that multiplication by <span class="math">\(v_2^{-1}\)</span> undoes multiplication by <span class="math">\(v_2\)</span>.  If we could do that, then we'd be able to write</p>
+<div class="math">\begin{equation*}
+v_1 \cdot v_2 = \mathbf{0} \text{ implies } v_1 \cdot v_2 \cdot v_2^{-1} = \mathbf{0} \cdot v_2^{-1}
+\end{equation*}</div>
+<p>
+and since <span class="math">\(v_2^{-1}\)</span> undoes multiplication by <span class="math">\(v_2\)</span> we'd end up with the expression
+</p>
+<div class="math">\begin{equation*}
+v_1 = \mathbf{0} \cdot v_2^{-1}
+\end{equation*}</div>
+<p>
+But this can't possibly be true - no matter what the vector <span class="math">\(v_2^{-1}\)</span> is, it's clear that multiplying it by <span class="math">\(\mathbf{0}\)</span> will always result in <span class="math">\(\mathbf{0}\)</span>, and <span class="math">\(v_1\)</span> and <span class="math">\(\mathbf{0}\)</span> are not the same thing.  There's simply no way to define a vector <span class="math">\(v_2^{-1}\)</span> that will undo multiplication by <span class="math">\(v_2\)</span> using this definition of a multiplication operation.  </p>
+<p>There is a more general terminology for this phenomenon - if a set has an multiplication operation and it's possible to multiply two non-zero objects together and obtain zero, then the multiplication is said to have <em>zero divisors</em>.  And the same argument above applies in general - if a multiplication operation has zero-divisors, it's not possible to define an inverse operation that defines division. With a bit more advanced math (that we might see in a later post), one can show that any multiplication operation on <span class="math">\(\mathbb{R}^3\)</span> has to have zero divisors, and so it is impossible to define a multiplication operation on <span class="math">\(\mathbb{R}^3\)</span> that also has a corresponding division operation.</p>
+<h3>Next Time: Vector Products in Three Dimensions</h3>
+<p>This is not to say that there are no useful concepts of "multiplication" or "product" in three dimensions.  In fact, there are two, and they may be familiar to those who have learned either physics. They are the <em>dot product</em> and the <em>cross product</em>, named for the symbols used to write them. Of course, these operations don't have a corresponding division operation, but that doesn't mean they can't still be useful.</p>
+<p>In the next posts, we'll learn what these products are and see why they're important to geometry in three dimensions.  These products will also provide the crucial link between the three-dimensional geometry we have been discussing and the 4-dimensional geometry of the quaternions.  </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/thesis.html">thesis</a>
+      <a href="http://www.josephthurman.com/tag/quaternions.html">quaternions</a>
+      <a href="http://www.josephthurman.com/tag/linear-algebra.html">linear algebra</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

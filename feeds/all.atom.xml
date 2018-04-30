@@ -1,5 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Joseph Thurman</title><link href="http://www.josephthurman.com/" rel="alternate"></link><link href="http://www.josephthurman.com/feeds/all.atom.xml" rel="self"></link><id>http://www.josephthurman.com/</id><updated>2018-03-29T12:00:00-04:00</updated><entry><title>Expanding the Binomial Option Pricing Model</title><link href="http://www.josephthurman.com/binomial4.html" rel="alternate"></link><published>2018-03-29T12:00:00-04:00</published><updated>2018-03-29T12:00:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-03-29:/binomial4.html</id><summary type="html">&lt;p&gt;This post will be the last post, at least for the time being, in the series discussing the &lt;a href="http://www.josephthurman.com/tag/binomial-model.html"&gt;binomial model&lt;/a&gt; for pricing options. In the &lt;a href="http://www.josephthurman.com/binomial3.html"&gt;previous post&lt;/a&gt; we implemented this model in Python in order to find prices for basic European call options.  In this post, we'll expand the implementation …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This post will be the last post, at least for the time being, in the series discussing the &lt;a href="http://www.josephthurman.com/tag/binomial-model.html"&gt;binomial model&lt;/a&gt; for pricing options. In the &lt;a href="http://www.josephthurman.com/binomial3.html"&gt;previous post&lt;/a&gt; we implemented this model in Python in order to find prices for basic European call options.  In this post, we'll expand the implementation so that it can be used to price a wider variety of options, including American options.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Joseph Thurman</title><link href="http://www.josephthurman.com/" rel="alternate"></link><link href="http://www.josephthurman.com/feeds/all.atom.xml" rel="self"></link><id>http://www.josephthurman.com/</id><updated>2018-04-30T12:01:00-04:00</updated><entry><title>Geometry of Three-Dimensional Vectors</title><link href="http://www.josephthurman.com/vectorsinR3.html" rel="alternate"></link><published>2018-04-30T12:01:00-04:00</published><updated>2018-04-30T12:01:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-04-30:/vectorsinR3.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers2.html"&gt;posts&lt;/a&gt; in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers.  The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane.&lt;/p&gt;
+&lt;p&gt;As mentioned in an &lt;a href="http://www.josephthurman.com/quaternions2.html"&gt;earlier post&lt;/a&gt;, this …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers2.html"&gt;posts&lt;/a&gt; in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers.  The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane.&lt;/p&gt;
+&lt;p&gt;As mentioned in an &lt;a href="http://www.josephthurman.com/quaternions2.html"&gt;earlier post&lt;/a&gt;, this geometrical interpretation leads to a natural attempt at generalization. If the complex number system can be used to describe two-dimensional geometry, is there a similar number system that can describe three-dimensional geometry? As that post mentioned, that's not quite the case. Instead, one has to increase to four dimensions, where the desired number system is known as the quaternions. The quaternions can still be used to gain some insight into three-dimensional geometry, however.  In order to understand those connections, we'll take the next few posts to discuss the relevant geometry in three dimensions.&lt;/p&gt;
+&lt;h3&gt;3-Dimensional Vectors&lt;/h3&gt;
+&lt;p&gt;The real numbers, &lt;span class="math"&gt;\(\mathbb{R}\)&lt;/span&gt;, are one-dimensional, and so an element of the set of real numbers is given by a single number. A two-dimensional quantity is something that is represented by a pair of real numbers. For example, the complex numbers &lt;span class="math"&gt;\(\mathbb{C}\)&lt;/span&gt; are two dimensional, and we write a complex number &lt;span class="math"&gt;\(z\)&lt;/span&gt; as &lt;span class="math"&gt;\(z = x + y i\)&lt;/span&gt; for &lt;span class="math"&gt;\(x, y\)&lt;/span&gt; real numbers. An element of a three-dimensional space, then, can be represented by three real numbers, which we usually write as &lt;span class="math"&gt;\((x,y,z)\)&lt;/span&gt;.  The set of ordered triples of real numbers is referred to as &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;More generally, we can consider the set &lt;span class="math"&gt;\(\mathbb{R}^k\)&lt;/span&gt; as the set of ordered &lt;span class="math"&gt;\(k\)&lt;/span&gt;-tuples of real numbers. For small values of &lt;span class="math"&gt;\(k\)&lt;/span&gt;, we have that &lt;span class="math"&gt;\(\mathbb{R}, \mathbb{R}^2,\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; correspond to the familiar notion of a line, a plane, and a space.  Larger values of &lt;span class="math"&gt;\(k\)&lt;/span&gt; are much more difficult to visualize.&lt;/p&gt;
+&lt;p&gt;In the case of the plane, when &lt;span class="math"&gt;\(k = 2\)&lt;/span&gt;, we've also earlier considered the complex numbers &lt;span class="math"&gt;\(\mathbb{C}\)&lt;/span&gt; as a plane, and we've seen that we can consider a complex number &lt;span class="math"&gt;\(z = x + yi\)&lt;/span&gt; as the ordered pair &lt;span class="math"&gt;\((x,y)\)&lt;/span&gt;. This means that &lt;span class="math"&gt;\(\mathbb{C}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbb{R}^2\)&lt;/span&gt; actually represent the same set. Why do we use two different symbols for the same set? When we write &lt;span class="math"&gt;\(\mathbb{R}^2\)&lt;/span&gt;, we're just considering the set of ordered pairs of numbers, which doesn't have a natural multiplication operation like the complex numbers do.  We therefore need to use a separate symbol, &lt;span class="math"&gt;\(\mathbb{C}\)&lt;/span&gt;, when we want to consider pairs of real numbers as complex numbers that have an additional multiplication operation.&lt;/p&gt;
+&lt;p&gt;This is common in mathematics - we can often give the same underlying object (the set of pairs of real numbers) additional layers of structure (a multiplication operation) to create something new.  In fact, the quaternions are another example of this type of construction. Using the definition above, an element of &lt;span class="math"&gt;\(\mathbb{R}^4\)&lt;/span&gt; is an ordered list &lt;span class="math"&gt;\((x_1, x_2, x_3, x_4)\)&lt;/span&gt; of 4 real numbers. A quaternion is also a list of four real numbers, &lt;span class="math"&gt;\(q = x_1 + x_2 i + x_3 j + x_4 k\)&lt;/span&gt;.  But the quaternions have an extra multiplication operation, and so we use the symbol &lt;span class="math"&gt;\(\mathbb{R}^4\)&lt;/span&gt; when we want to consider the set of ordered quadruplets of numbers, and the symbol &lt;span class="math"&gt;\(\mathbb{H}\)&lt;/span&gt; when we want to consider the set of ordered quadruplets of numbers &lt;em&gt;along with&lt;/em&gt; the additional quaternionic multiplication operation.&lt;/p&gt;
+&lt;p&gt;Considering three dimensions, the standard way of visualizing elements &lt;span class="math"&gt;\((x,y,z)\)&lt;/span&gt; in &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; is as points graphed on a plot with three axes. This is illustrated below, where we graph the points &lt;span class="math"&gt;\((1,2,3)\)&lt;/span&gt; and &lt;span class="math"&gt;\((0,-2,-1)\)&lt;/span&gt;.  Here we're using the standard conventions for drawing three-dimensional graphs on a flat 2-dimensional screen. The positive &lt;span class="math"&gt;\(x\)&lt;/span&gt;-axis is pointing down and to the left, which you should visualize as pointing out of the screen.  The positive &lt;span class="math"&gt;\(y\)&lt;/span&gt;-axis points to the right, and the positive &lt;span class="math"&gt;\(z\)&lt;/span&gt;-axis points up.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Points plotted in 3D" src="http://www.josephthurman.com/pointsin3d.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Points plotted in 3D&lt;/em&gt;&lt;/p&gt;
+&lt;h3&gt;3-Dimensional Vector Addition&lt;/h3&gt;
+&lt;p&gt;Points in three-dimensional space can also be considered as vectors, just as we did in two dimensions. Instead of considering the point &lt;span class="math"&gt;\((x,y,z)\)&lt;/span&gt; as just a point, we visualize it as an arrow starting at the origin &lt;span class="math"&gt;\((0,0,0)\)&lt;/span&gt; and pointing to the point &lt;span class="math"&gt;\((x,y,z)\)&lt;/span&gt;.  The is pictured below, where we consider the same points graphed above as vectors.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Vectors plotted in 3D" src="http://www.josephthurman.com/vectorsin3d.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Vectors plotted in 3D&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The vector addition operation we discussed in two dimensions also generalizes naturally to three-dimensions.  There's an intuitive way to add elements of &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt;, by just adding the corresponding elements in the ordered triples:
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(x_1, y_1, z_1) + (x_2, y_2, z_2) = (x_1 + x_2, y_1 + y_2, z_1 + z_2)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+For the two points we've considered above, we have
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(1,2,3) + (0,-2,-1) = (1,0,2)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;This operation also has the same geometric meaning - if we consider the ordered triples as vectors, then addition corresponds to moving one arrow to begin at the end of the other, then drawing a new vector to the end of that arrow.  This is clearer in pictures, shown below.  The red vector is &lt;span class="math"&gt;\((1,2,3)\)&lt;/span&gt;, the blue vector is &lt;span class="math"&gt;\((0,-2,-1)\)&lt;/span&gt; and the sum &lt;span class="math"&gt;\((1,0,2)\)&lt;/span&gt; is shown in black. The translates of the vectors are also shown to demonstrate that the parallelogram rule similarly applies in 3-dimensions.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Vector addition in 3D" src="http://www.josephthurman.com/vectoradditionin3d.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Vector addition in 3D&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This addition operation generalizes naturally to all higher dimensions - we can always add two element of &lt;span class="math"&gt;\(\mathbb{R}^k\)&lt;/span&gt; by considering those elements as ordered &lt;span class="math"&gt;\(k\)&lt;/span&gt;-tuples of numbers and just adding the corresponding numbers.  (In four dimensions, this exactly gives the operation of addition of quaternions, but we'll discuss this more later.) This becomes difficult, if not impossible, to visualize in higher dimensions, though.  The set &lt;span class="math"&gt;\(\mathbb{R}^k\)&lt;/span&gt;, along with this vector addition operation, is the main example of a &lt;em&gt;vector space&lt;/em&gt;, an extremely important concept in geometry that we'll discuss in more depth in a later post.&lt;/p&gt;
+&lt;p&gt;We see that the set of &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; of triples of real numbers can be given an addition operation, and an inverse subtraction operation is also easy to define: we just subtract the corresponding elements in the triples.  Taking a different set of vectors to subtract, if we have the vectors &lt;span class="math"&gt;\(v_1 = (-1,1,3)\)&lt;/span&gt; and &lt;span class="math"&gt;\(v_2 = (1,2,2)\)&lt;/span&gt;, then the subtraction &lt;span class="math"&gt;\(v_1 - v_2\)&lt;/span&gt; results in the vector
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(-1,1,3) - (1,2,2) = (-2,-1,1)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+This also has an easy interpretation in terms of vectors - subtracting a vector is the same as adding a vector pointing in the opposite direction.  This is illustrated below:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Vector subtraction in 3D" src="http://www.josephthurman.com/vectorsubtractionin3d.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Vector subtraction in 3D&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In these images, the red vector is &lt;span class="math"&gt;\(v_1\)&lt;/span&gt;, the blue vector is &lt;span class="math"&gt;\(v_2\)&lt;/span&gt;, and the black vector corresponds to the subtraction &lt;span class="math"&gt;\(v_1 - v_2\)&lt;/span&gt;, which we'll call &lt;span class="math"&gt;\(v_3\)&lt;/span&gt;.  The green vector is the vector &lt;span class="math"&gt;\(-v_2 = (-1,-2,-2)\)&lt;/span&gt;, the vector with the same magnitude as &lt;span class="math"&gt;\(v_2\)&lt;/span&gt; but pointing in the opposite direction.  Note that the subtraction &lt;span class="math"&gt;\(v_1 - v_2\)&lt;/span&gt; is the same as the vector addition &lt;span class="math"&gt;\(v_1 + (-v_2)\)&lt;/span&gt;, as illustrated in the left figure.  &lt;/p&gt;
+&lt;p&gt;The image on the right gives another way to interpret the subtraction.  We have that &lt;span class="math"&gt;\(v_1 - v_2 = v_3\)&lt;/span&gt;, which we can rearrange to say that &lt;span class="math"&gt;\(v_1 = v_3 + v_2\)&lt;/span&gt;, which is the vector addition shown on the right.  &lt;/p&gt;
+&lt;h3&gt;What About Multiplication and Division?&lt;/h3&gt;
+&lt;p&gt;Recall that all our work so far has been to try to understand number systems that have addition, subtraction, multiplication, and division operations. We've done half of that work in &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; by defining a way to add and subtract triples of real numbers, and this operation corresponds geometrically to vector addition and subtraction.  What happens when we try to define multiplication and division operations?&lt;/p&gt;
+&lt;p&gt;As mentioned earlier, it turns out this is impossible - one has to increase to four dimensions and consider the quaternions in order to be able to define a higher-dimensional number system that has a valid multiplication and division operation.  Proving exactly why such an operation can't exist in three dimensions will have to wait for a later post, but in order to understand this impossibility it's worth it to try to see what happens when we attempt to make such a definition.&lt;/p&gt;
+&lt;p&gt;In particular, we could try to make the most obvious definition for multiplication - what if we just multiply two triples by multiplying their corresponding entries? That is, we can define a multiplication operation by
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(x_1, y_1, z_1) \cdot (x_2, y_2, z_2) = (x_1x_2, y_1y_2, z_1z_2)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;This certainly defines some kind of operation, but the problem is that there is no way to define a corresponding inverse or division operation for this multiplication.  To see why, consider the multiplication below:
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(1,0,1) \cdot (0,1,0) = (0,0,0)
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+Call the two vectors that we've defined &lt;span class="math"&gt;\(v_1\)&lt;/span&gt; and &lt;span class="math"&gt;\(v_2\)&lt;/span&gt;, and let &lt;span class="math"&gt;\(\mathbf{0}\)&lt;/span&gt; denote the vector that consists of all zeros, so that we can write the above in a shorter form as &lt;span class="math"&gt;\(v_1 \cdot v_2 = \mathbf{0}\)&lt;/span&gt;.  &lt;/p&gt;
+&lt;p&gt;We'd like to define an inverse for &lt;span class="math"&gt;\(v_2\)&lt;/span&gt;, which we would denote by &lt;span class="math"&gt;\(v_2^{-1}\)&lt;/span&gt;, such that multiplication by &lt;span class="math"&gt;\(v_2^{-1}\)&lt;/span&gt; undoes multiplication by &lt;span class="math"&gt;\(v_2\)&lt;/span&gt;.  If we could do that, then we'd be able to write&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+v_1 \cdot v_2 = \mathbf{0} \text{ implies } v_1 \cdot v_2 \cdot v_2^{-1} = \mathbf{0} \cdot v_2^{-1}
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+and since &lt;span class="math"&gt;\(v_2^{-1}\)&lt;/span&gt; undoes multiplication by &lt;span class="math"&gt;\(v_2\)&lt;/span&gt; we'd end up with the expression
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+v_1 = \mathbf{0} \cdot v_2^{-1}
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+But this can't possibly be true - no matter what the vector &lt;span class="math"&gt;\(v_2^{-1}\)&lt;/span&gt; is, it's clear that multiplying it by &lt;span class="math"&gt;\(\mathbf{0}\)&lt;/span&gt; will always result in &lt;span class="math"&gt;\(\mathbf{0}\)&lt;/span&gt;, and &lt;span class="math"&gt;\(v_1\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbf{0}\)&lt;/span&gt; are not the same thing.  There's simply no way to define a vector &lt;span class="math"&gt;\(v_2^{-1}\)&lt;/span&gt; that will undo multiplication by &lt;span class="math"&gt;\(v_2\)&lt;/span&gt; using this definition of a multiplication operation.  &lt;/p&gt;
+&lt;p&gt;There is a more general terminology for this phenomenon - if a set has an multiplication operation and it's possible to multiply two non-zero objects together and obtain zero, then the multiplication is said to have &lt;em&gt;zero divisors&lt;/em&gt;.  And the same argument above applies in general - if a multiplication operation has zero-divisors, it's not possible to define an inverse operation that defines division. With a bit more advanced math (that we might see in a later post), one can show that any multiplication operation on &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; has to have zero divisors, and so it is impossible to define a multiplication operation on &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; that also has a corresponding division operation.&lt;/p&gt;
+&lt;h3&gt;Next Time: Vector Products in Three Dimensions&lt;/h3&gt;
+&lt;p&gt;This is not to say that there are no useful concepts of "multiplication" or "product" in three dimensions.  In fact, there are two, and they may be familiar to those who have learned either physics. They are the &lt;em&gt;dot product&lt;/em&gt; and the &lt;em&gt;cross product&lt;/em&gt;, named for the symbols used to write them. Of course, these operations don't have a corresponding division operation, but that doesn't mean they can't still be useful.&lt;/p&gt;
+&lt;p&gt;In the next posts, we'll learn what these products are and see why they're important to geometry in three dimensions.  These products will also provide the crucial link between the three-dimensional geometry we have been discussing and the 4-dimensional geometry of the quaternions.  &lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="thesis"></category><category term="quaternions"></category><category term="linear algebra"></category></entry><entry><title>Expanding the Binomial Option Pricing Model</title><link href="http://www.josephthurman.com/binomial4.html" rel="alternate"></link><published>2018-03-29T12:00:00-04:00</published><updated>2018-03-29T12:00:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-03-29:/binomial4.html</id><summary type="html">&lt;p&gt;This post will be the last post, at least for the time being, in the series discussing the &lt;a href="http://www.josephthurman.com/tag/binomial-model.html"&gt;binomial model&lt;/a&gt; for pricing options. In the &lt;a href="http://www.josephthurman.com/binomial3.html"&gt;previous post&lt;/a&gt; we implemented this model in Python in order to find prices for basic European call options.  In this post, we'll expand the implementation …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This post will be the last post, at least for the time being, in the series discussing the &lt;a href="http://www.josephthurman.com/tag/binomial-model.html"&gt;binomial model&lt;/a&gt; for pricing options. In the &lt;a href="http://www.josephthurman.com/binomial3.html"&gt;previous post&lt;/a&gt; we implemented this model in Python in order to find prices for basic European call options.  In this post, we'll expand the implementation so that it can be used to price a wider variety of options, including American options.&lt;/p&gt;
 &lt;h3&gt;Pricing European Put Options&lt;/h3&gt;
 &lt;p&gt;To begin, let's take a second look at the implementation we found in the previous post to price call options.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt;
