@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/friendly.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="Before the hiatus, we began discussing the geometry of vectors in three dimensions. At the end of that post, we discussed why it was impossible to define a multiplication operation on \(\mathbb{R}^3\) that also has an inverse (division) operation. However, there are still two useful &#34;product&#34; operations involving …" />
+<meta name="keywords" content="thesis, quaternions, linear algebra">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="The Dot Product"/>
+<meta property="og:description" content="Before the hiatus, we began discussing the geometry of vectors in three dimensions. At the end of that post, we discussed why it was impossible to define a multiplication operation on \(\mathbb{R}^3\) that also has an inverse (division) operation. However, there are still two useful &#34;product&#34; operations involving …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/dotproduct.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-09-12 19:30:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Thesis"/>
+<meta property="article:tag" content="thesis"/>
+<meta property="article:tag" content="quaternions"/>
+<meta property="article:tag" content="linear algebra"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; The Dot Product</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+          <li><a href="http://www.josephthurman.com/./contact/">contact</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/josephthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/josephthurman/blog-projects" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="dotproduct">The Dot Product</h1>
+    <p>
+          Posted on Wed 12 September 2018 in <a href="http://www.josephthurman.com/category/thesis.html">Thesis</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Before the hiatus, we began discussing the geometry of vectors in three dimensions.  At the end of <a href="http://www.josephthurman.com/vectorsinR3.html">that post</a>, we discussed why it was impossible to define a multiplication operation on <span class="math">\(\mathbb{R}^3\)</span> that also has an inverse (division) operation.  However, there are still two useful "product" operations involving three-dimensional vectors.  These operations aren't true multiplication operations, in that they don't have an inverse division operation, but they are still useful for understanding three-dimensional geometry. In this post we'll learn about the first of them, the so-called <em>dot product</em>.  </p>
+<h3>Motivation - Distance and Angles</h3>
+<p>In the last section, we visualized <span class="math">\(\mathbb{R}^3\)</span>, the set of triples of real numbers, by considering vectors as arrows in three-dimensional space. Implicit in this description are notions of angle and distance. After all, in order to visualize the vector <span class="math">\((1, 2, 3)\)</span> as an arrow in the three-dimensional coordinate system, we need first to set up three perpendicular axes (that is, the angle between each pair of axes is <span class="math">\(90^\circ\)</span>), then draw tick marks along each axis at a fixed distance. Said another way, when we do this procedure we are declaring that the vectors <span class="math">\(\mathbf{e}_1 = (1,0,0), \mathbf{e}_2 = (0,1,0)\)</span>, and <span class="math">\(\mathbf{e}_3 = (0,0,1)\)</span> should be understood geometrically as arrows of unit length that are pairwise perpendicular. As a note on terminology, we say that the collection of vectors <span class="math">\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)</span> is an <em>orthonormal basis</em>. "Orthonormal" is a combination of <em>orthogonal</em>, which is a synonym for perpendicular, while <em>normal</em> means that each vector is of unit length. ("Basis" has a technical meaning that we don't need to get into right now.)</p>
+<p>The important point here is that this is an extra piece of information. Considered on its own, the triple of numbers <span class="math">\((1,2,3)\)</span> has no inherent geometrical meaning. Similarly, considering <span class="math">\(\mathbb{R}^3\)</span> as just a set of triples of real numbers gives it no geometrical meaning.  Geometry requires some notion of measurement of distances - after all, the word geometry itself comes from Greek for "Earth measurement". We have to make some extra choices to give the set <span class="math">\(\mathbb{R}^3\)</span> geometric structure. One possible choice is to declare that the vectors <span class="math">\(\mathbf{e}_1, \mathbf{e}_2,\)</span> and <span class="math">\(\mathbf{e}_3\)</span> are to be considered orthonormal. This allows us to consider all vectors as arrows, and then consider angles and distances in the usual way.  </p>
+<p>For example, this choice allows us to say that then length of the vector <span class="math">\((1,2,3)\)</span> is <span class="math">\(\sqrt{14}\)</span>. We can find this by repeatedly using the Pythagorean theorem, as illustrated below.</p>
+<p><img alt="Finding Lengths in R3" src="http://www.josephthurman.com/distanceinr3.png"></p>
+<p><em>Finding Vector Lengths in</em> <span class="math">\(\mathbb{R}^3\)</span></p>
+<p>In this picture, the two black lines run parallel to the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> axes, so are easily seen to have lengths 1 and 2.  They form a right triangle, with hypotenuse of length <span class="math">\(\sqrt{1^2 + 2^2} = \sqrt{5}\)</span> by the Pythagorean theorem.  This hypotenuse is shown in orange.  The orange and blue lines themselves form a right triangle, of which the red vector <span class="math">\((1,2,3)\)</span> is the hypotenuse.  The blue line is parallel to the <span class="math">\(z\)</span> axis, so we can see that it has length <span class="math">\(3\)</span>, and so the red vector has length
+</p>
+<div class="math">\begin{equation*}
+\sqrt{ \sqrt{5}^2 + 3^3 } = \sqrt{5 + 9} = \sqrt{14}
+\end{equation*}</div>
+<p>
+as we said before. We could use a similar procedure of breaking down vectors into their components in the <span class="math">\(x, y, z\)</span> directions (which are the same as the <span class="math">\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)</span> directions) to find the length of any vector <span class="math">\((v_1, v_2, v_3)\)</span>, which we will write as <span class="math">\(\|\mathbf{v} \|\)</span>, to be
+</p>
+<div class="math">\begin{equation*}
+\|\mathbf{v} \| = \sqrt{v_1^2 + v_2^2 + v_3^2}
+\end{equation*}</div>
+<p>
+Similarly, we could also find angles between vectors using similar arguments. These methods for computing lengths and angles are unified and made simpler using an operation called the <em>dot product</em>.</p>
+<h3>Definition of the Dot Product</h3>
+<p>Given two vectors <span class="math">\(\mathbf{v} = (v_1, v_2, v_3)\)</span> and <span class="math">\(\mathbf{w} = (w_1, w_2, w_3)\)</span>, we define their dot product to be the number
+</p>
+<div class="math">\begin{equation*}
+\mathbf{v} \cdot \mathbf{w} = v_1 w_1 + v_2 w_2 + v_3 w_3
+\end{equation*}</div>
+<p>
+First, notice that this product operation is of a different type than the multiplication operation we wish that we could define.  The dot product operation takes in two vectors and returns a single number. A multiplication operation that generalized the multiplication of complex numbers to three dimensions would be an operation that takes in two (3-dimensional) vectors and returned a third vector.</p>
+<p>From the formula, it is easy to check that this product operation has many of the nice properties we might expect. It is <em>commutative</em>, that is,
+</p>
+<div class="math">\begin{equation*}
+\mathbf{v} \cdot \mathbf{w} = \mathbf{w} \cdot \mathbf{v},
+\end{equation*}</div>
+<p>
+and is <em>distributive</em> with respect to vector addition, that is,
+</p>
+<div class="math">\begin{equation*}
+(\mathbf{v}_1 + \mathbf{v}_2) \cdot \mathbf{w} = \mathbf{v}_1 \cdot \mathbf{w} + \mathbf{v}_2 \cdot \mathbf{w}
+\end{equation*}</div>
+<p>As mentioned above, the dot product can be used to measure distances and angles. First, it can be used to find the length of a vector, since
+</p>
+<div class="math">\begin{equation*}
+\mathbf{v} \cdot \mathbf{v} = v_1^2 + v_2^2 + v_3^2 = \|\mathbf{v} \|^2,
+\end{equation*}</div>
+<p>
+that is, taking the dot product of a vector with itself gives the square of the length.  </p>
+<p>This allows us to find distances more generally. Given two points <span class="math">\(p_1, p_2\)</span> in three-dimensional space, we can consider the vectors <span class="math">\(\mathbf{w}_1, \mathbf{w}_2\)</span> that go from the origin to those points.  The difference <span class="math">\(\mathbf{w}_2 - \mathbf{w}_1\)</span> is a vector pointing from <span class="math">\(p_1\)</span> to <span class="math">\(p_2\)</span>, and so the length of the vector gives the distance between those point. If we use <span class="math">\(d(\mathbf{w}_1, \mathbf{w}_2)\)</span> to denote the distance between the endpoints of the vectors <span class="math">\(\mathbf{w}_1, \mathbf{w}_2\)</span>, we have that
+</p>
+<div class="math">\begin{equation*}
+d(\mathbf{w}_1, \mathbf{w}_2) = \| \mathbf{w}_2 - \mathbf{w}_1 \|
+\end{equation*}</div>
+<p>We can also use the dot product to find the angle between two vectors. Given two vectors <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{w}\)</span>, the angle <span class="math">\(\theta\)</span> between these two vectors is given by the formula
+</p>
+<div class="math">\begin{equation*}
+\cos \theta = \frac{\mathbf{v} \cdot \mathbf{w}}{\|\mathbf{v}\| \, \|\mathbf{w}\|}
+\end{equation*}</div>
+<p>
+As a special case, we can see that this means that <span class="math">\(\mathbf{v} \cdot \mathbf{w} = 0\)</span> exactly when <span class="math">\(\theta = 90^\circ\)</span>, i.e., when the two vectors are orthogonal.</p>
+<p>Why is this formula for the dot product correct? It goes back to the fact that the distances and angles are determined by declaring <span class="math">\(\mathbf{e}_1 = (1,0,0), \mathbf{e}_2 = (0,1,0),\)</span> and <span class="math">\(\mathbf{e_3} = (0,0,1)\)</span> to be orthonormal.  We've defined the formula for the dot product exactly to make this so.  For example,
+</p>
+<div class="math">\begin{equation*}
+\mathbf{e}_1 \cdot \mathbf{e}_1 = 1^2 + 0^2 + 0^2 = 1,
+\end{equation*}</div>
+<p>
+as needed, and
+</p>
+<div class="math">\begin{equation*}
+\mathbf{e_2} \cdot \mathbf{e}_3 = 0 \cdot 0 + 1 \cdot 0 + 0 \cdot 1 = 0,
+\end{equation*}</div>
+<p>
+with similar statements for the other vectors <span class="math">\(\mathbf{e}_2, \mathbf{e}_3\)</span> and the other pairs.</p>
+<h3>Generalizations</h3>
+<p>This definition of the dot product in three dimensions has a number of different generalizations.</p>
+<p>First, we observe that in our arguments above we gave <span class="math">\(\mathbf{R}^3\)</span> a geometric structure by declaring a set of orthonormal vectors <span class="math">\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)</span>.  We then showed that the distances and angles between vectors that arise from those choices can be summarized by the dot product.  </p>
+<p>This also works in reverse.  Given the set <span class="math">\(\mathbf{R}^3\)</span>, we can define a dot product on <span class="math">\(\mathbf{R}^3\)</span> as above, and then use that dot product to define lengths and angles.  With distances and angles defined in this way, the vectors <span class="math">\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)</span> are orthonormal. Defining a dot product and defining an orthonormal basis are essentially equivalent processes.</p>
+<p>The idea of giving a space a geometry by defining a dot product can be generalized to the notion of <a href="https://en.wikipedia.org/wiki/Inner_product_space">inner product spaces</a>. These are sets equipped with an operation called an "inner product" that behaves like the dot product, which gives a way to measure lengths and distances in that space.  We'll return to inner product spaces later in this series.</p>
+<p>Finally, although we defined the dot product for three-dimensional vectors since we're considering product operations in three dimensions, we can in fact define a dot product operation for any of the spaces <span class="math">\(\mathbb{R}^k\)</span> we defined in the previous post.  Given two elements of <span class="math">\(\mathbf{v} = (v_1, \ldots, v_k)\)</span> and <span class="math">\(\mathbf{w} = (w_1, \ldots, w_k)\)</span> of <span class="math">\(\mathbb{R}^k\)</span>, their dot product is
+</p>
+<div class="math">\begin{equation*}
+\mathbf{v} \cdot \mathbf{w} = v_1 w_1 + \cdots + v_k w_k
+\end{equation*}</div>
+<p>
+The set <span class="math">\(\mathbb{R}^k\)</span> along with the geometric structure that arises from the dot product is called "<span class="math">\(K\)</span>-dimensional Euclidean space." It is named after <a href="https://en.wikipedia.org/wiki/Euclid">Euclid</a>, the ancient Greek mathematician who formalized the standard, two-dimensional geometry taught in high school. These geometries are all examples of the flat geometries discussed in the <a href="http://www.josephthurman.com/first-series-explaining-my-thesis.html">introductory post</a> in this series.</p>
+<p>This dot product is just one way, however, to take the set <span class="math">\(\mathbb{R}^k\)</span> and define a geometric structure on it that allows us to compute the distance between two points. Using other distance functions can give us other, curved geometries, analogous to the sphere or saddle depicted in that introductory post. This will be hugely important later, but we'll get to that after we finish describing the geometrical interpretation of the quaternions that we're working toward.</p>
+<h3>Next Time - The Cross Product</h3>
+<p>The dot product is a product operation that takes in two vectors and returns a number, and is used to measure distances and angles in <span class="math">\(\mathbb{R}^3\)</span> so that we can consider the geometry of that space. There is a second product operation on <span class="math">\(\mathbb{R}^3\)</span>, however, that takes in two vectors and gives back a third vector.  This "cross product" is the final piece of 3-dimensional geometry we'll need to be able to understand the 4-dimensional quaternions.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/thesis.html">thesis</a>
+      <a href="http://www.josephthurman.com/tag/quaternions.html">quaternions</a>
+      <a href="http://www.josephthurman.com/tag/linear-algebra.html">linear algebra</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

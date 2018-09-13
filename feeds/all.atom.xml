@@ -1,5 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Joseph Thurman</title><link href="http://www.josephthurman.com/" rel="alternate"></link><link href="http://www.josephthurman.com/feeds/all.atom.xml" rel="self"></link><id>http://www.josephthurman.com/</id><updated>2018-08-21T10:01:00-04:00</updated><entry><title>Hiatus is Over!</title><link href="http://www.josephthurman.com/hiatusisover.html" rel="alternate"></link><published>2018-08-21T10:01:00-04:00</published><updated>2018-08-21T10:01:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-08-21:/hiatusisover.html</id><summary type="html">&lt;p&gt;This blog has been on a long (and heretofore unannounced) hiatus as I completed my Ph.D. dissertation over the summer. But good news! Now that my dissertation has been defended, I'm ready to start posting again. Regular updates will resume soon.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This blog has been on a long (and heretofore unannounced) hiatus as I completed my Ph.D. dissertation over the summer. But good news! Now that my dissertation has been defended, I'm ready to start posting again. Regular updates will resume soon.&lt;/p&gt;</content></entry><entry><title>Geometry of Three-Dimensional Vectors</title><link href="http://www.josephthurman.com/vectorsinR3.html" rel="alternate"></link><published>2018-04-30T12:01:00-04:00</published><updated>2018-04-30T12:01:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-04-30:/vectorsinR3.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers2.html"&gt;posts&lt;/a&gt; in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers.  The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Joseph Thurman</title><link href="http://www.josephthurman.com/" rel="alternate"></link><link href="http://www.josephthurman.com/feeds/all.atom.xml" rel="self"></link><id>http://www.josephthurman.com/</id><updated>2018-09-12T19:30:00-04:00</updated><entry><title>The Dot Product</title><link href="http://www.josephthurman.com/dotproduct.html" rel="alternate"></link><published>2018-09-12T19:30:00-04:00</published><updated>2018-09-12T19:30:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-09-12:/dotproduct.html</id><summary type="html">&lt;p&gt;Before the hiatus, we began discussing the geometry of vectors in three dimensions.  At the end of &lt;a href="http://www.josephthurman.com/vectorsinR3.html"&gt;that post&lt;/a&gt;, we discussed why it was impossible to define a multiplication operation on &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; that also has an inverse (division) operation.  However, there are still two useful "product" operations involving …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Before the hiatus, we began discussing the geometry of vectors in three dimensions.  At the end of &lt;a href="http://www.josephthurman.com/vectorsinR3.html"&gt;that post&lt;/a&gt;, we discussed why it was impossible to define a multiplication operation on &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; that also has an inverse (division) operation.  However, there are still two useful "product" operations involving three-dimensional vectors.  These operations aren't true multiplication operations, in that they don't have an inverse division operation, but they are still useful for understanding three-dimensional geometry. In this post we'll learn about the first of them, the so-called &lt;em&gt;dot product&lt;/em&gt;.  &lt;/p&gt;
+&lt;h3&gt;Motivation - Distance and Angles&lt;/h3&gt;
+&lt;p&gt;In the last section, we visualized &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt;, the set of triples of real numbers, by considering vectors as arrows in three-dimensional space. Implicit in this description are notions of angle and distance. After all, in order to visualize the vector &lt;span class="math"&gt;\((1, 2, 3)\)&lt;/span&gt; as an arrow in the three-dimensional coordinate system, we need first to set up three perpendicular axes (that is, the angle between each pair of axes is &lt;span class="math"&gt;\(90^\circ\)&lt;/span&gt;), then draw tick marks along each axis at a fixed distance. Said another way, when we do this procedure we are declaring that the vectors &lt;span class="math"&gt;\(\mathbf{e}_1 = (1,0,0), \mathbf{e}_2 = (0,1,0)\)&lt;/span&gt;, and &lt;span class="math"&gt;\(\mathbf{e}_3 = (0,0,1)\)&lt;/span&gt; should be understood geometrically as arrows of unit length that are pairwise perpendicular. As a note on terminology, we say that the collection of vectors &lt;span class="math"&gt;\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)&lt;/span&gt; is an &lt;em&gt;orthonormal basis&lt;/em&gt;. "Orthonormal" is a combination of &lt;em&gt;orthogonal&lt;/em&gt;, which is a synonym for perpendicular, while &lt;em&gt;normal&lt;/em&gt; means that each vector is of unit length. ("Basis" has a technical meaning that we don't need to get into right now.)&lt;/p&gt;
+&lt;p&gt;The important point here is that this is an extra piece of information. Considered on its own, the triple of numbers &lt;span class="math"&gt;\((1,2,3)\)&lt;/span&gt; has no inherent geometrical meaning. Similarly, considering &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; as just a set of triples of real numbers gives it no geometrical meaning.  Geometry requires some notion of measurement of distances - after all, the word geometry itself comes from Greek for "Earth measurement". We have to make some extra choices to give the set &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; geometric structure. One possible choice is to declare that the vectors &lt;span class="math"&gt;\(\mathbf{e}_1, \mathbf{e}_2,\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbf{e}_3\)&lt;/span&gt; are to be considered orthonormal. This allows us to consider all vectors as arrows, and then consider angles and distances in the usual way.  &lt;/p&gt;
+&lt;p&gt;For example, this choice allows us to say that then length of the vector &lt;span class="math"&gt;\((1,2,3)\)&lt;/span&gt; is &lt;span class="math"&gt;\(\sqrt{14}\)&lt;/span&gt;. We can find this by repeatedly using the Pythagorean theorem, as illustrated below.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Finding Lengths in R3" src="http://www.josephthurman.com/distanceinr3.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Finding Vector Lengths in&lt;/em&gt; &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;In this picture, the two black lines run parallel to the &lt;span class="math"&gt;\(x\)&lt;/span&gt; and &lt;span class="math"&gt;\(y\)&lt;/span&gt; axes, so are easily seen to have lengths 1 and 2.  They form a right triangle, with hypotenuse of length &lt;span class="math"&gt;\(\sqrt{1^2 + 2^2} = \sqrt{5}\)&lt;/span&gt; by the Pythagorean theorem.  This hypotenuse is shown in orange.  The orange and blue lines themselves form a right triangle, of which the red vector &lt;span class="math"&gt;\((1,2,3)\)&lt;/span&gt; is the hypotenuse.  The blue line is parallel to the &lt;span class="math"&gt;\(z\)&lt;/span&gt; axis, so we can see that it has length &lt;span class="math"&gt;\(3\)&lt;/span&gt;, and so the red vector has length
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\sqrt{ \sqrt{5}^2 + 3^3 } = \sqrt{5 + 9} = \sqrt{14}
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+as we said before. We could use a similar procedure of breaking down vectors into their components in the &lt;span class="math"&gt;\(x, y, z\)&lt;/span&gt; directions (which are the same as the &lt;span class="math"&gt;\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)&lt;/span&gt; directions) to find the length of any vector &lt;span class="math"&gt;\((v_1, v_2, v_3)\)&lt;/span&gt;, which we will write as &lt;span class="math"&gt;\(\|\mathbf{v} \|\)&lt;/span&gt;, to be
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\|\mathbf{v} \| = \sqrt{v_1^2 + v_2^2 + v_3^2}
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+Similarly, we could also find angles between vectors using similar arguments. These methods for computing lengths and angles are unified and made simpler using an operation called the &lt;em&gt;dot product&lt;/em&gt;.&lt;/p&gt;
+&lt;h3&gt;Definition of the Dot Product&lt;/h3&gt;
+&lt;p&gt;Given two vectors &lt;span class="math"&gt;\(\mathbf{v} = (v_1, v_2, v_3)\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbf{w} = (w_1, w_2, w_3)\)&lt;/span&gt;, we define their dot product to be the number
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\mathbf{v} \cdot \mathbf{w} = v_1 w_1 + v_2 w_2 + v_3 w_3
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+First, notice that this product operation is of a different type than the multiplication operation we wish that we could define.  The dot product operation takes in two vectors and returns a single number. A multiplication operation that generalized the multiplication of complex numbers to three dimensions would be an operation that takes in two (3-dimensional) vectors and returned a third vector.&lt;/p&gt;
+&lt;p&gt;From the formula, it is easy to check that this product operation has many of the nice properties we might expect. It is &lt;em&gt;commutative&lt;/em&gt;, that is,
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\mathbf{v} \cdot \mathbf{w} = \mathbf{w} \cdot \mathbf{v},
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+and is &lt;em&gt;distributive&lt;/em&gt; with respect to vector addition, that is,
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+(\mathbf{v}_1 + \mathbf{v}_2) \cdot \mathbf{w} = \mathbf{v}_1 \cdot \mathbf{w} + \mathbf{v}_2 \cdot \mathbf{w}
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;As mentioned above, the dot product can be used to measure distances and angles. First, it can be used to find the length of a vector, since
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\mathbf{v} \cdot \mathbf{v} = v_1^2 + v_2^2 + v_3^2 = \|\mathbf{v} \|^2,
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+that is, taking the dot product of a vector with itself gives the square of the length.  &lt;/p&gt;
+&lt;p&gt;This allows us to find distances more generally. Given two points &lt;span class="math"&gt;\(p_1, p_2\)&lt;/span&gt; in three-dimensional space, we can consider the vectors &lt;span class="math"&gt;\(\mathbf{w}_1, \mathbf{w}_2\)&lt;/span&gt; that go from the origin to those points.  The difference &lt;span class="math"&gt;\(\mathbf{w}_2 - \mathbf{w}_1\)&lt;/span&gt; is a vector pointing from &lt;span class="math"&gt;\(p_1\)&lt;/span&gt; to &lt;span class="math"&gt;\(p_2\)&lt;/span&gt;, and so the length of the vector gives the distance between those point. If we use &lt;span class="math"&gt;\(d(\mathbf{w}_1, \mathbf{w}_2)\)&lt;/span&gt; to denote the distance between the endpoints of the vectors &lt;span class="math"&gt;\(\mathbf{w}_1, \mathbf{w}_2\)&lt;/span&gt;, we have that
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+d(\mathbf{w}_1, \mathbf{w}_2) = \| \mathbf{w}_2 - \mathbf{w}_1 \|
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;We can also use the dot product to find the angle between two vectors. Given two vectors &lt;span class="math"&gt;\(\mathbf{v}\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbf{w}\)&lt;/span&gt;, the angle &lt;span class="math"&gt;\(\theta\)&lt;/span&gt; between these two vectors is given by the formula
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\cos \theta = \frac{\mathbf{v} \cdot \mathbf{w}}{\|\mathbf{v}\| \, \|\mathbf{w}\|}
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+As a special case, we can see that this means that &lt;span class="math"&gt;\(\mathbf{v} \cdot \mathbf{w} = 0\)&lt;/span&gt; exactly when &lt;span class="math"&gt;\(\theta = 90^\circ\)&lt;/span&gt;, i.e., when the two vectors are orthogonal.&lt;/p&gt;
+&lt;p&gt;Why is this formula for the dot product correct? It goes back to the fact that the distances and angles are determined by declaring &lt;span class="math"&gt;\(\mathbf{e}_1 = (1,0,0), \mathbf{e}_2 = (0,1,0),\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbf{e_3} = (0,0,1)\)&lt;/span&gt; to be orthonormal.  We've defined the formula for the dot product exactly to make this so.  For example,
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\mathbf{e}_1 \cdot \mathbf{e}_1 = 1^2 + 0^2 + 0^2 = 1,
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+as needed, and
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\mathbf{e_2} \cdot \mathbf{e}_3 = 0 \cdot 0 + 1 \cdot 0 + 0 \cdot 1 = 0,
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+with similar statements for the other vectors &lt;span class="math"&gt;\(\mathbf{e}_2, \mathbf{e}_3\)&lt;/span&gt; and the other pairs.&lt;/p&gt;
+&lt;h3&gt;Generalizations&lt;/h3&gt;
+&lt;p&gt;This definition of the dot product in three dimensions has a number of different generalizations.&lt;/p&gt;
+&lt;p&gt;First, we observe that in our arguments above we gave &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt; a geometric structure by declaring a set of orthonormal vectors &lt;span class="math"&gt;\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)&lt;/span&gt;.  We then showed that the distances and angles between vectors that arise from those choices can be summarized by the dot product.  &lt;/p&gt;
+&lt;p&gt;This also works in reverse.  Given the set &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt;, we can define a dot product on &lt;span class="math"&gt;\(\mathbf{R}^3\)&lt;/span&gt; as above, and then use that dot product to define lengths and angles.  With distances and angles defined in this way, the vectors &lt;span class="math"&gt;\(\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\)&lt;/span&gt; are orthonormal. Defining a dot product and defining an orthonormal basis are essentially equivalent processes.&lt;/p&gt;
+&lt;p&gt;The idea of giving a space a geometry by defining a dot product can be generalized to the notion of &lt;a href="https://en.wikipedia.org/wiki/Inner_product_space"&gt;inner product spaces&lt;/a&gt;. These are sets equipped with an operation called an "inner product" that behaves like the dot product, which gives a way to measure lengths and distances in that space.  We'll return to inner product spaces later in this series.&lt;/p&gt;
+&lt;p&gt;Finally, although we defined the dot product for three-dimensional vectors since we're considering product operations in three dimensions, we can in fact define a dot product operation for any of the spaces &lt;span class="math"&gt;\(\mathbb{R}^k\)&lt;/span&gt; we defined in the previous post.  Given two elements of &lt;span class="math"&gt;\(\mathbf{v} = (v_1, \ldots, v_k)\)&lt;/span&gt; and &lt;span class="math"&gt;\(\mathbf{w} = (w_1, \ldots, w_k)\)&lt;/span&gt; of &lt;span class="math"&gt;\(\mathbb{R}^k\)&lt;/span&gt;, their dot product is
+&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation*}
+\mathbf{v} \cdot \mathbf{w} = v_1 w_1 + \cdots + v_k w_k
+\end{equation*}&lt;/div&gt;
+&lt;p&gt;
+The set &lt;span class="math"&gt;\(\mathbb{R}^k\)&lt;/span&gt; along with the geometric structure that arises from the dot product is called "&lt;span class="math"&gt;\(K\)&lt;/span&gt;-dimensional Euclidean space." It is named after &lt;a href="https://en.wikipedia.org/wiki/Euclid"&gt;Euclid&lt;/a&gt;, the ancient Greek mathematician who formalized the standard, two-dimensional geometry taught in high school. These geometries are all examples of the flat geometries discussed in the &lt;a href="http://www.josephthurman.com/first-series-explaining-my-thesis.html"&gt;introductory post&lt;/a&gt; in this series.&lt;/p&gt;
+&lt;p&gt;This dot product is just one way, however, to take the set &lt;span class="math"&gt;\(\mathbb{R}^k\)&lt;/span&gt; and define a geometric structure on it that allows us to compute the distance between two points. Using other distance functions can give us other, curved geometries, analogous to the sphere or saddle depicted in that introductory post. This will be hugely important later, but we'll get to that after we finish describing the geometrical interpretation of the quaternions that we're working toward.&lt;/p&gt;
+&lt;h3&gt;Next Time - The Cross Product&lt;/h3&gt;
+&lt;p&gt;The dot product is a product operation that takes in two vectors and returns a number, and is used to measure distances and angles in &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt; so that we can consider the geometry of that space. There is a second product operation on &lt;span class="math"&gt;\(\mathbb{R}^3\)&lt;/span&gt;, however, that takes in two vectors and gives back a third vector.  This "cross product" is the final piece of 3-dimensional geometry we'll need to be able to understand the 4-dimensional quaternions.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="thesis"></category><category term="quaternions"></category><category term="linear algebra"></category></entry><entry><title>Hiatus is Over!</title><link href="http://www.josephthurman.com/hiatusisover.html" rel="alternate"></link><published>2018-08-21T10:01:00-04:00</published><updated>2018-08-21T10:01:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-08-21:/hiatusisover.html</id><summary type="html">&lt;p&gt;This blog has been on a long (and heretofore unannounced) hiatus as I completed my Ph.D. dissertation over the summer. But good news! Now that my dissertation has been defended, I'm ready to start posting again. Regular updates will resume soon.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This blog has been on a long (and heretofore unannounced) hiatus as I completed my Ph.D. dissertation over the summer. But good news! Now that my dissertation has been defended, I'm ready to start posting again. Regular updates will resume soon.&lt;/p&gt;</content></entry><entry><title>Geometry of Three-Dimensional Vectors</title><link href="http://www.josephthurman.com/vectorsinR3.html" rel="alternate"></link><published>2018-04-30T12:01:00-04:00</published><updated>2018-04-30T12:01:00-04:00</updated><author><name>Joseph Thurman</name></author><id>tag:www.josephthurman.com,2018-04-30:/vectorsinR3.html</id><summary type="html">&lt;p&gt;The &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers2.html"&gt;posts&lt;/a&gt; in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers.  The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane.&lt;/p&gt;
 &lt;p&gt;As mentioned in an &lt;a href="http://www.josephthurman.com/quaternions2.html"&gt;earlier post&lt;/a&gt;, this …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers1.html"&gt;previous&lt;/a&gt; &lt;a href="http://www.josephthurman.com/geometryofcomplexnumbers2.html"&gt;posts&lt;/a&gt; in this series discussed two-dimensional vector geometry and how that geometry can be connected to the algebra of complex numbers.  The main result is that the multiplication of complex numbers corresponds geometrically to rotations and dilations of the 2-dimensional plane.&lt;/p&gt;
 &lt;p&gt;As mentioned in an &lt;a href="http://www.josephthurman.com/quaternions2.html"&gt;earlier post&lt;/a&gt;, this geometrical interpretation leads to a natural attempt at generalization. If the complex number system can be used to describe two-dimensional geometry, is there a similar number system that can describe three-dimensional geometry? As that post mentioned, that's not quite the case. Instead, one has to increase to four dimensions, where the desired number system is known as the quaternions. The quaternions can still be used to gain some insight into three-dimensional geometry, however.  In order to understand those connections, we'll take the next few posts to discuss the relevant geometry in three dimensions.&lt;/p&gt;
 &lt;h3&gt;3-Dimensional Vectors&lt;/h3&gt;
