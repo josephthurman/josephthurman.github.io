@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/pygments/friendly.min.css">
+  <link rel="stylesheet" type="text/css" href="http://www.josephthurman.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="http://www.josephthurman.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joseph Thurman Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-113964599-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Joseph Thurman" />
+<meta name="description" content="We&#39;re nearly ready to give the geometric interpretation of quaternionic multiplication that we&#39;ve been working toward ever since we first defined the quaternions. Instead of considering the four-dimensional quaternions, we&#39;ve spent the last few posts considering three-dimensional vectors, specifically discussing a product operation called the dot product that we can …" />
+<meta name="keywords" content="thesis, quaternions, linear algebra">
+
+<meta property="og:site_name" content="Joseph Thurman"/>
+<meta property="og:title" content="The Cross Product"/>
+<meta property="og:description" content="We&#39;re nearly ready to give the geometric interpretation of quaternionic multiplication that we&#39;ve been working toward ever since we first defined the quaternions. Instead of considering the four-dimensional quaternions, we&#39;ve spent the last few posts considering three-dimensional vectors, specifically discussing a product operation called the dot product that we can …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://www.josephthurman.com/crossproduct.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-10-01 17:00:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://www.josephthurman.com/author/joseph-thurman.html">
+<meta property="article:section" content="Thesis"/>
+<meta property="article:tag" content="thesis"/>
+<meta property="article:tag" content="quaternions"/>
+<meta property="article:tag" content="linear algebra"/>
+<meta property="og:image" content="">
+
+  <title>Joseph Thurman &ndash; The Cross Product</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+
+      <a href="http://www.josephthurman.com">
+        <img src="http://www.josephthurman.com/theme/img/profile.png" alt="Joseph Thurman" title="Joseph Thurman">
+      </a>
+
+      <h1><a href="http://www.josephthurman.com">Joseph Thurman</a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="http://www.josephthurman.com/index.html">about</a></li>
+          <li><a href="http://www.josephthurman.com/blog_index.html">blog</a></li>
+          <li><a href="http://www.josephthurman.com/./contact/">contact</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="http://www.linkedin.com/in/jthurman" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/josephthurman/blog-projects" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="crossproduct">The Cross Product</h1>
+    <p>
+          Posted on Mon 01 October 2018 in <a href="http://www.josephthurman.com/category/thesis.html">Thesis</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>We're nearly ready to give the geometric interpretation of quaternionic multiplication that we've been working toward ever since we <a href="http://www.josephthurman.com/quaternions2.html">first defined the quaternions</a>. Instead of considering the four-dimensional quaternions, we've spent the last <a href="http://www.josephthurman.com/vectorsinR3.html">few</a> <a href="http://www.josephthurman.com/dotproduct.html">posts</a> considering three-dimensional vectors, specifically discussing a product operation called the <a href="http://www.josephthurman.com/dotproduct.html">dot product</a> that we can use to understand geometry in three dimensions.  In this post, we'll introduce a second product operation in three dimensions, the so-called <em>cross product</em>.</p>
+<h3>Intuition for the Cross Product</h3>
+<p>The cross product is an operation that takes in two three-dimensional vectors and returns a three dimensional vector. (Recall that the dot product, in contrast, takes in two vectors and returns a number.) In order to see how this operation works, notice that if we're given two arbitrary vectors in <span class="math">\(\mathbb{R}^3\)</span>, then chances are these two vectors will determine a two-dimensional plane in <span class="math">\(\mathbb{R}^3\)</span>. For a simple example, the two vectors <span class="math">\(\mathbf{e}_1 = (1,0,0)\)</span> and <span class="math">\(\mathbf{e}_2 = (0,1,0)\)</span> that point in the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> directions in our standard picture determine the <span class="math">\(xy\)</span>-plane, the set of all points with <span class="math">\(z\)</span> coordinate equal to <span class="math">\(0\)</span>:</p>
+<p><img alt="Two Vectors Determine a Plane" src="http://www.josephthurman.com/planefromvectors1.png"></p>
+<p><em>Two vectors determine a plane</em></p>
+<p>One way to visualize the plane created by two vectors is to see that if we add two vectors using <a href="http://www.josephthurman.com/vectorsinR3.html">the parallelogram method</a>, then the parallelogram enclosed by the vectors can be extended to the plane determined by the two vectors.  We can use this to visualize the plane determined by the vectors <span class="math">\((1,2,3)\)</span> and <span class="math">\((0,-2,-1)\)</span>, shown in red and blue, respectively, in the picture below.</p>
+<p><img alt="Parallelogram method to visualize the plane determined by two vectors" src="http://www.josephthurman.com/planefromvectors2.png"></p>
+<p><em>Parallelogram method to visualize the plane determined by two vectors</em></p>
+<p>Considering the parallelogram rule for addition is also helpful for understanding the conditions for which two different vectors don't actually determine a unique plane. This occurs when the two given vectors don't make a parallelogram under vector addition because they point either in the same direction or in exactly opposite directions.  As we see illustrated below, in this case there are many possible planes that contain both vectors, instead of just one.</p>
+<p><img alt="Multiple planes containing by vectors in opposite directions" src="http://www.josephthurman.com/planefromvectors3.png"></p>
+<p><em>Multiple planes containing by vectors in opposite directions</em></p>
+<p>For example in the picture above the two vectors <span class="math">\((2,0,0)\)</span> and <span class="math">\((-3,0,0)\)</span>, which point in opposite directions, can both be contained in many different planes, including the <span class="math">\(xy\)</span>-plane and the <span class="math">\(xz\)</span>-plane, consisting of points that have <span class="math">\(y\)</span>-coordinate equal to zero.  We can also produce many other planes containing these vectors by rotation.</p>
+<p>Therefore we have that, given two vectors in <span class="math">\(\mathbb{R}^3\)</span>, we can usually use them to define a plane.  The observation that leads to the cross product is to note that there is a second way to describe a plane in <span class="math">\(\mathbb{R}^3\)</span>, using a <em>normal vector</em>.  A vector is said to be a <em>normal</em> to a plane if that vector is orthogonal (perpendicular) to any vector that sits in the plane. Conversely, given a vector, we can produce a plane by considering all of the vectors orthogonal to the given one.  These two processes are illustrated below.</p>
+<p><img alt="Describing a plane by a normal vector" src="http://www.josephthurman.com/normalvector1.png"></p>
+<p><em>Describing a plane by a normal vector</em></p>
+<p>In the picture above, we see that the plane is determined by the blue vector <span class="math">\((1,0,0)\)</span> and the red vector <span class="math">\((0,2,-1)\)</span>.  This plane can also be described by considering a normal vector, shown in black.  This vector is the vector <span class="math">\((0,1,2)\)</span>, and it's not hard to see that any vector that lies in the plane will be perpendicular to this vector.</p>
+<p>Thus we have a method to take two vectors and produce a plane, and then to take a plane and produce a normal vector.  Putting these two processes together, we obtain the cross product.  That is, the cross product is the operation that takes in two vectors and returns a vector that is normal to the plane determined by those two vectors.  </p>
+<p>There is a slight problem with this definition: given a plane, there is not a unique normal vector to that plane.  This is illustrated below:</p>
+<p><img alt="Normal vectors are not unique" src="http://www.josephthurman.com/normalvector2.png"></p>
+<p><em>Normal vectors are not unique</em></p>
+<p>This is the same plane as above, and the black vector is also the same. We can see, though, that it is not the only vector normal to the plane - the blue vector, which points in the same direction as the black vector, is also normal, as is the red vector, which points in the exact opposite direction.  </p>
+<p>Instead of being determined by a single normal vector, a plane is determined by a single normal line.  We can then pick many different normal vectors by choosing a direction and a length along that line.  Therefore in order to fully define the cross product we need to decide on a systematic way to assign a length and a direction to the normal vector that we pick.  </p>
+<p>We'll consider length first. Given vectors <span class="math">\(\mathbf{v}, \mathbf{w}\)</span>, we choose the length of the cross product vector, which is written as <span class="math">\(\mathbf{v} \times \mathbf{w}\)</span>, by saying that
+</p>
+<div class="math">\begin{equation*}
+\| \mathbf{v} \times \mathbf{w} \| = \| \mathbf{v} \| \, \| \mathbf{w} \| \sin \theta
+\end{equation*}</div>
+<p>
+where <span class="math">\(\theta\)</span> is the angle between the vectors <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{w}\)</span>.  Recall that all of these lengths and angles can be measured by using the <a href="http://www.josephthurman.com/dotproduct.html">dot product</a> operation defined in the previous post.  </p>
+<p>Why do we make this choice? Recall from above that we can consider the plane defined by the vectors <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{w}\)</span> as extending the area inside the parallelogram associated to those two vector via vector addition.  The number <span class="math">\(\| \mathbf{v} \| \, \| \mathbf{w} \| \sin \theta\)</span> is then exactly the area of this parallelogram.  Another important point is to notice that in the case that the vectors <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{w}\)</span> are on the same line, and therefore don't define a unique plane, then the angle between them is either <span class="math">\(\theta = 0^\circ\)</span> or <span class="math">\(\theta = 180^\circ\)</span>, and in either case we have <span class="math">\(\sin 0^\circ = \sin 180^\circ = 0\)</span>.  Therefore the cross product of two vectors that don't actually determine a unique plane is the zero vector <span class="math">\(\mathbf{0} = (0,0,0)\)</span>.  Note that this means that the cross product is not a multiplication operation - we can take two non-zero vectors and their cross product can be the zero vector.  This means, following the general discussion from a few <a href="http://www.josephthurman.com/vectorsinR3.html">posts back</a>, that there is no way to define a "division" operation that is inverse to the cross product operation.  </p>
+<p>There's still one issue remaining in defining the cross product.  We've seen how to get the length of the cross product vector, but still can't be certain of the direction.  For a simple example, we can return to the situation of the vectors <span class="math">\(\mathbf{e}_1 = (1,0,0)\)</span> and <span class="math">\(\mathbf{e}_2 = (0,1,0)\)</span>.  As we said above, the plane associated to these vectors is the <span class="math">\(xy\)</span>-plane, and we see that any vector of the form <span class="math">\((0,0,z)\)</span> will be normal to this plane.  Using the formula for lengths described above, we therefore have that <span class="math">\(\mathbf{e}_1 \times \mathbf{e}_2\)</span> should be either <span class="math">\(\mathbf{e}_3 = (0,0,1)\)</span> or <span class="math">\(-\mathbf{e}_3 = (0,0,-1)\)</span>, as these are the two unit vectors that point in the <span class="math">\(z\)</span> direction.  But which one should it be?</p>
+<p>We can choose either one, and the standard choice is to choose <span class="math">\((0,0,1)\)</span>, so that <span class="math">\(\mathbf{e}_1 \times \mathbf{e_2} = \mathbf{e}_3\)</span>.  This choice can be remembered using the <em>right-hand rule</em> for the cross product. To find the direction of the cross-product <span class="math">\(\mathbf{v} \times \mathbf{w}\)</span>, you can begin by pointing the fingers of your right hand in the direction of the vector <span class="math">\(\mathbf{v}\)</span>, then curling your fingers toward the vector <span class="math">\(\mathbf{w}\)</span>, as if making a fist.  If you extend your thumb while making this motion, then it points in the direction of the cross product vector <span class="math">\(\mathbf{v} \times \mathbf{w}\)</span>.</p>
+<p><img alt="Right hand rule" src="http://www.josephthurman.com/righthandrule.png"></p>
+<p><em>Right hand rule</em></p>
+<p>This is shown in the picture above.  If you begin with the fingers of your right hand pointing out of the page in the direction of <span class="math">\(\mathbf{e}_1 = (1,0,0)\)</span>, which is shown in red in the above picture, and then curl them to <span class="math">\(\mathbf{e}_2 = (0,1,0)\)</span>, which is shown in blue, then your hand will curl and rotate in the direction of the black arrow, and your thumb will point upward, in the direction of <span class="math">\(\mathbf{e}_3 = (0,0,1)\)</span>, shown in green.</p>
+<p>Note that this choice is totally arbitrary - we could just as well have chosen to define <span class="math">\(\mathbf{e}_1 \times \mathbf{e}_2 = (0,0,-1)\)</span>, which would correspond to the <em>left-hand rule</em> for determining the direction of the cross product.   </p>
+<p>The fact that we have to make this choice means that the order of the elements of the cross product matters. This can be verified by example - if you use the right-hand rule to determine the direction of <span class="math">\(\mathbf{e}_2 \times \mathbf{e}_1\)</span>, you'll notice that your thumb points down instead of up, that is, <span class="math">\(\mathbf{e}_2 \times \mathbf{e}_1 = (0,0,-1) = -\mathbf{e}_3\)</span>.  This means that the cross product is <em>not commutative</em> - in general, <span class="math">\(\mathbf{v} \times \mathbf{w}\)</span> and <span class="math">\(\mathbf{w} \times \mathbf{v}\)</span> are not the same vector.  In fact, it's not hard to see that <span class="math">\(\mathbf{v} \times \mathbf{w} = - \mathbf{w} \times \mathbf{v}\)</span>, that is, changing the order of the cross product changes the direction of the resulting vector. For this reason, we say that the cross product is <em>anti-commutative</em> - it commutes, but with a minus sign. You might remember that <a href="http://www.josephthurman.com/quaternions2.html">quaternionic multiplication</a> is also not commutative - we'll return to this point in the next post.</p>
+<h3>Formula for the Cross Product</h3>
+<p>To summarize, the cross product is a procedure that takes in two vectors <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{w}\)</span>, and returns a third vector. If <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{w}\)</span> together determine a plane, then this third vector is perpendicular to that plane, with length and direction determined by the choices above.  If <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{w}\)</span> do not determine a unique plane, the cross product is just the zero vector <span class="math">\(\mathbf{0} = (0,0,0)\)</span>.</p>
+<p>Understanding the above geometric interpretation of the cross product is the most important part of this post, but it isn't useful for actual computations.  In order to compute, we need the following formula. If <span class="math">\(\mathbf{v} = (v_1, v_2, v_3)\)</span> and <span class="math">\(\mathbf{w} = (w_1, w_2, w_3)\)</span> are two vectors, then their cross product is given by the formula
+</p>
+<div class="math">\begin{equation*}
+\mathbf{v} \times \mathbf{w} = (v_2 w_3 - v_3 w_2, -v_1 w_3 + v_3 w_1, v_1 w_2 - v_2 w_1 )
+\end{equation*}</div>
+<p>Let's check that this is the correct formula. First, the above formula does define an anti-commutative operation - if you exchange all of the <span class="math">\(v\)</span>'s and <span class="math">\(w\)</span>'s in the above formula, you'll get the same vector, but multiplied by <span class="math">\(-1\)</span> in each entry. Next, we observe that the formula above follows the right-hand rule - we can easily check that <span class="math">\((1,0,0) \times (0,1,0) = (0,0,1)\)</span>, that is, <span class="math">\(\mathbf{e}_1 \times \mathbf{e}_2 = \mathbf{e}_3\)</span>, using this formula.</p>
+<p>For a third check, we can observe that the vectors <span class="math">\(\mathbf{v}\)</span> and <span class="math">\(\mathbf{v} \times \mathbf{w}\)</span> are orthogonal. The dot product of these two vectors is zero, since
+</p>
+<div class="math">\begin{align*}
+\mathbf{v} \cdot (\mathbf{v} \times \mathbf{w}) &amp;= (v_1, v_2, v_3) \times (v_2 w_3 - v_3 w_2, -v_1 w_3 + v_3 w_1, v_1 w_2 - v_2 w_1 ) \\
+  &amp;= v_1 (v_2 w_3 - v_3 w_2) + v_2(-v_1 w_3 + v_3 w_1) + v_3(v_1 w_2 - v_2 w_1) \\
+  &amp;= 0
+\end{align*}</div>
+<p>
+Anticommutativity then gives that <span class="math">\(\mathbf{w}\)</span> and <span class="math">\(\mathbf{v} \times \mathbf{w}\)</span> are also orthogonal. In order to be sure this formula is correct, it remains to show that the vector <span class="math">\(\mathbf{v} \times \mathbf{w}\)</span> that it defines has the proper length.  We'll skip that check here, but the interested reader could try to prove that for themselves.</p>
+<h3>Next Time - Finally Understanding the Quaternions</h3>
+<p>We now have both a geometric intuition and a number-crunching formula for the cross product, and with this understanding we're finally ready to consider quaternionic multiplication from a geometric point of view.  In the next post, we'll see that quaternionic multiplication gives a way to combine the dot product and cross product into a single operation. Using this, we'll be able to understand quaternionic multiplication in terms of rotations and distances in three dimensions.</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://www.josephthurman.com/tag/thesis.html">thesis</a>
+      <a href="http://www.josephthurman.com/tag/quaternions.html">quaternions</a>
+      <a href="http://www.josephthurman.com/tag/linear-algebra.html">linear algebra</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Joseph Thurman 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Joseph Thurman ",
+  "url" : "http://www.josephthurman.com",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
